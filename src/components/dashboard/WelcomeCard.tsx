@@ -1,0 +1,23 @@
+"use client";
+
+interface WelcomeCardProps {
+  fullname: string;
+}
+
+export default function WelcomeCard({
+  fullname,
+}: WelcomeCardProps) {
+  return (
+    <div className="rounded-2xl bg-green-600 p-8 text-white shadow">
+
+      <h2 className="text-3xl font-bold">
+        👋 สวัสดี {fullname}
+      </h2>
+
+      <p className="mt-3 text-green-100">
+        ยินดีต้อนรับเข้าสู่ระบบประเมินความเครียด
+      </p>
+
+    </div>
+  );
+}

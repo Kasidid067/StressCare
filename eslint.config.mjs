@@ -16,3 +16,12 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
+
+export default [
+  // ...
+  {
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
+];

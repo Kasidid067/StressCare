@@ -1,0 +1,9 @@
+import axios from "axios";
+
+export async function getAdvisors() {
+    const { data } = await axios.get(
+        "/api/admin/advisors"
+    );
+
+    return data;
+}

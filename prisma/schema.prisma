@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  ADVISOR
+  STAFF
+  ADMIN
+}
+
+enum StressLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ActivityCategory {
+  RELAX
+  EXERCISE
+  MEDITATION
+  MUSIC
+  OTHER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Major {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users User[]
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  studentId String  @unique
+  fullname  String
+  phone     String?
+  email     String  @unique
+  password  String
+  year      Int
+
+  role   Role       @default(STUDENT)
+  status UserStatus @default(ACTIVE)
+
+  majorId   Int
+  advisorId Int?
+  lastLogin DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  major    Major  @relation(fields: [majorId], references: [id])
+  advisor  User?  @relation("AdvisorStudents", fields: [advisorId], references: [id], onDelete: SetNull)
+  students User[] @relation("AdvisorStudents")
+
+  assessments  ST5Assessment[]
+  pulses       PulseRecord[]
+  results      StressResult[]
+  activityLogs ActivityLog[]
+
+  @@index([majorId])
+  @@index([advisorId])
+  @@index([role])
+  @@index([status])
+  @@index([advisorId, role])
+}
+
+model ST5Assessment {
+  id         Int           @id @default(autoincrement())
+  userId     Int
+  totalScore Int
+  createdAt  DateTime      @default(now())
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers    ST5Answer[]
+  result     StressResult?
+
+  @@index([userId])
+}
+
+model ST5Answer {
+  id           Int           @id @default(autoincrement())
+  assessmentId Int
+  questionNo   Int
+  score        Int
+  assessment   ST5Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+}
+
+model PulseRecord {
+  id         Int           @id @default(autoincrement())
+  userId     Int
+  bpm        Int
+  spo2       Float?
+  recordedAt DateTime      @default(now())
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  result     StressResult?
+
+  @@index([userId])
+}
+
+model StressResult {
+  id             Int           @id @default(autoincrement())
+  userId         Int
+  assessmentId   Int           @unique
+  pulseId        Int?          @unique
+  stressScore    Int
+  stressLevel    StressLevel
+  recommendation String?
+  aiSummary      String?
+  createdAt      DateTime      @default(now())
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assessment     ST5Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  pulse          PulseRecord?  @relation(fields: [pulseId], references: [id])
+
+  @@index([userId])
+}
+
+model Activity {
+  id          Int              @id @default(autoincrement())
+  title       String
+  description String
+  image       String?
+  category    ActivityCategory
+  duration    Int
+  stressLevel StressLevel
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  logs        ActivityLog[]
+}
+
+model ActivityLog {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  activityId  Int
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity    Activity  @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([activityId])
+}
