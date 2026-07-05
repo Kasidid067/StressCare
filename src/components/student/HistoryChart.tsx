@@ -39,7 +39,7 @@ export default function HistoryChart({
             }));
     return (
 
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <h2 className="mb-6 text-2xl font-bold">
                 กราฟคะแนนย้อนหลัง
             </h2>

@@ -25,13 +25,13 @@ function levelText(level: string) {
 function levelColor(level: string) {
     switch (level) {
         case "LOW":
-            return "bg-green-100 text-green-700";
+            return "status-low";
         case "MEDIUM":
-            return "bg-yellow-100 text-yellow-700";
+            return "status-medium";
         case "HIGH":
-            return "bg-red-100 text-red-700";
+            return "status-high";
         default:
-            return "bg-gray-100 text-gray-600";
+            return "bg-[var(--surface-muted)] text-[var(--content-muted)] border border-[var(--border)]";
     }
 }
 
@@ -44,7 +44,7 @@ export default function ActivityTable({
     if (activities.length === 0) {
 
         return (
-            <div className="rounded-xl bg-white p-10 text-center shadow">
+            <div className="theme-card rounded-xl p-10 text-center">
                 ยังไม่มีกิจกรรม
             </div>
         );
@@ -53,11 +53,11 @@ export default function ActivityTable({
 
     return (
 
-        <div className="overflow-hidden rounded-xl bg-white shadow">
+        <div className="theme-card overflow-hidden rounded-xl">
 
             <table className="min-w-full">
 
-                <thead className="bg-green-600 text-white">
+                <thead className="bg-[var(--surface-muted)] text-[var(--content-muted)]">
 
                     <tr>
 
@@ -91,7 +91,7 @@ export default function ActivityTable({
 
                         <tr
                             key={activity.id}
-                            className="border-b hover:bg-gray-50"
+                            className="border-b border-[var(--border)] hover:bg-[var(--surface-muted)]"
                         >
 
                             <td className="p-4">
@@ -100,7 +100,7 @@ export default function ActivityTable({
                                     {activity.title}
                                 </div>
 
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-[var(--content-muted)]">
                                     {activity.description}
                                 </div>
                             </td>
@@ -129,7 +129,7 @@ export default function ActivityTable({
                                         onClick={() =>
                                             onEdit(activity)
                                         }
-                                        className="rounded-lg bg-blue-500 p-2 text-white"
+                                        className="rounded-lg bg-[var(--accent)] p-2 text-white"
                                     >
                                         <Pencil size={18} />
                                     </button>
@@ -137,7 +137,7 @@ export default function ActivityTable({
                                         onClick={() =>
                                             onDelete(activity)
                                         }
-                                        className="rounded-lg bg-red-500 p-2 text-white"
+                                        className="rounded-lg bg-[var(--status-high-text)] p-2 text-white"
                                     >
                                         <Trash2 size={18} />
                                     </button>

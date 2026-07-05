@@ -82,7 +82,7 @@ export default function PulsePage() {
             <h1 className="mb-8 text-3xl font-bold text-green-700">
                 วัดชีพจร
             </h1>
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
                 <div className="flex flex-col items-center">
                     <Heart
                         size={80}
@@ -101,7 +101,7 @@ export default function PulsePage() {
                                 : result?.bpm ?? "--"
                         }
                     </div>
-                    <div className="mt-2 text-lg text-gray-500">
+                    <div className="mt-2 text-lg text-[var(--content-muted)]">
                         BPM
                     </div>
                     <button
@@ -116,35 +116,35 @@ export default function PulsePage() {
                         }
                     </button>
                     {result && (
-                        <div className="mt-10 w-full rounded-2xl bg-green-50 p-6">
+                        <div className="mt-10 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] p-6">
                             <h2 className="mb-6 text-2xl font-bold text-green-700">
                                 ผลการวัดล่าสุด
                             </h2>
                             <div className="grid gap-6 md:grid-cols-3">
-                                <div className="rounded-xl bg-white p-5 shadow">
-                                    <p className="text-gray-500">
+                                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow" style={{ boxShadow: "var(--shadow)" }}>
+                                    <p className="text-[var(--content-muted)]">
                                         ชีพจร
                                     </p>
                                     <h3 className="mt-2 text-4xl font-bold">
                                         {result.bpm}
                                     </h3>
-                                    <p className="mt-1 text-gray-500">
+                                    <p className="mt-1 text-[var(--content-muted)]">
                                         BPM
                                     </p>
                                 </div>
-                                <div className="rounded-xl bg-white p-5 shadow">
-                                    <p className="text-gray-500">
+                                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow" style={{ boxShadow: "var(--shadow)" }}>
+                                    <p className="text-[var(--content-muted)]">
                                         ค่าออกซิเจน
                                     </p>
                                     <h3 className="mt-2 text-4xl font-bold">
                                         {result.spo2 ?? "-"}
                                     </h3>
-                                    <p className="mt-1 text-gray-500">
+                                    <p className="mt-1 text-[var(--content-muted)]">
                                         %
                                     </p>
                                 </div>
-                                <div className="rounded-xl bg-white p-5 shadow">
-                                    <p className="text-gray-500">
+                                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow" style={{ boxShadow: "var(--shadow)" }}>
+                                    <p className="text-[var(--content-muted)]">
                                         สถานะ
                                     </p>
                                     <h3
@@ -158,12 +158,12 @@ export default function PulsePage() {
                     )}
                 </div>
             </div>
-            <div className="mt-10 rounded-2xl bg-white p-8 shadow">
+            <div className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
                 <h2 className="mb-6 text-2xl font-bold text-green-700">
                     ประวัติการวัดชีพจร
                 </h2>
                 {records.length === 0 ? (
-                    <div className="py-12 text-center text-gray-500">
+                    <div className="py-12 text-center text-[var(--content-muted)]">
                         ยังไม่มีข้อมูลการวัดชีพจร
                     </div>
                 ) : (

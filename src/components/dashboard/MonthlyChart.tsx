@@ -52,15 +52,28 @@ export default function MonthlyChart({
                     <BarChart data={chartData}>
                         <CartesianGrid
                             strokeDasharray="3 3"
+                            stroke="var(--border)"
                         />
                         <XAxis
                             dataKey="month"
+                            stroke="var(--content-muted)"
+                            tick={{ fill: "var(--content-muted)" }}
                         />
-                        <YAxis />
-                        <Tooltip />
+                        <YAxis
+                            stroke="var(--content-muted)"
+                            tick={{ fill: "var(--content-muted)" }}
+                        />
+                        <Tooltip
+                            contentStyle={{
+                                background: "var(--surface)",
+                                border: "1px solid var(--border)",
+                                borderRadius: "0.75rem",
+                                color: "var(--content-text)",
+                            }}
+                        />
                         <Bar
                             dataKey="total"
-                            fill="#16a34a"
+                            fill="#14b8a6"
                             radius={[6, 6, 0, 0]}
                         />
                     </BarChart>

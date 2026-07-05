@@ -25,24 +25,24 @@ export default function RecommendedActivities({
     activities,
 }: Props) {
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <div className="mb-6 flex items-center justify-between">
                 <div>
                     <h2 className="text-2xl font-bold">
                         🎯 กิจกรรมที่แนะนำ
                     </h2>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[var(--content-muted)]">
                         ระบบแนะนำกิจกรรมตามระดับความเครียดของคุณ
                     </p>
                 </div>
             </div>
             {activities.length === 0 ? (
-                <div className="flex h-52 items-center justify-center rounded-xl border border-dashed">
+                <div className="flex h-52 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-muted)]">
                     <div className="text-center">
                         <div className="text-6xl">
                             📭
                         </div>
-                        <p className="mt-3 text-gray-500">
+                        <p className="mt-3 text-[var(--content-muted)]">
                             ยังไม่มีกิจกรรมแนะนำ
                         </p>
                     </div>
@@ -52,7 +52,7 @@ export default function RecommendedActivities({
                     {activities.map((activity) => (
                         <div
                             key={activity.id}
-                            className="overflow-hidden rounded-2xl border bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            className="theme-card-soft overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                         >
                             {activity.image ? (
                                 <div className="relative h-44 w-full">
@@ -64,7 +64,7 @@ export default function RecommendedActivities({
                                     />
                                 </div>
                             ) : (
-                                <div className="flex h-44 items-center justify-center bg-green-50 text-6xl">
+                                <div className="flex h-44 items-center justify-center bg-[var(--surface-muted)] text-6xl">
                                     {categoryEmoji[
                                         activity.category
                                     ] ?? "🎯"}
@@ -75,19 +75,19 @@ export default function RecommendedActivities({
                                 <h3 className="text-xl font-bold">
                                     {activity.title}
                                 </h3>
-                                <p className="mt-3 line-clamp-3 text-sm text-gray-600">
+                                <p className="mt-3 line-clamp-3 text-sm text-[var(--content-muted)]">
                                     {activity.description}
                                 </p>
                                 <div className="mt-5 flex items-center justify-between">
-                                    <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+                                    <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-sm font-medium text-[var(--content-text)] border border-[var(--border)]">
                                         ⏱ {activity.duration} นาที
                                     </span>
-                                    <span className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600">
+                                    <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-xs text-[var(--content-muted)] border border-[var(--border)]">
                                         {activity.category}
                                     </span>
                                 </div>
                                 <button
-                                    className="mt-6 w-full rounded-xl bg-green-600 py-3 font-semibold text-white transition hover:bg-green-700"
+                                    className="mt-6 w-full rounded-xl bg-[var(--accent)] py-3 font-semibold text-white transition hover:opacity-90"
                                 >
                                     เริ่มกิจกรรม
                                 </button>

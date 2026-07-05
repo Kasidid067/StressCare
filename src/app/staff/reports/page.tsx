@@ -125,13 +125,13 @@ export default function StaffReportsPage() {
 
                 <div>
 
-                    <h1 className="text-4xl font-bold text-green-700">
+                    <h1 className="text-4xl font-bold text-[var(--accent-strong)]">
 
                         รายงานทั้งหมด
 
                     </h1>
 
-                    <p className="mt-2 text-gray-500">
+                    <p className="mt-2 text-[var(--content-muted)]">
 
                         รายงานภาพรวมของนักศึกษาทั้งมหาวิทยาลัย
 
@@ -143,7 +143,7 @@ export default function StaffReportsPage() {
 
                     <button
 
-                        className="flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-white"
+                        className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-5 py-3 font-semibold text-white transition hover:opacity-90"
 
                     >
 
@@ -155,7 +155,7 @@ export default function StaffReportsPage() {
 
                     <button
 
-                        className="flex items-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-white"
+                        className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 font-semibold text-[var(--content-text)] transition hover:bg-[var(--surface-muted)]"
 
                     >
 
@@ -169,7 +169,7 @@ export default function StaffReportsPage() {
 
             </div>
 
-            <div className="rounded-2xl bg-white p-6 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <div className="mb-6 grid gap-4 md:grid-cols-3">
 
@@ -177,7 +177,7 @@ export default function StaffReportsPage() {
 
                         <Search
                             size={18}
-                            className="absolute left-4 top-4 text-gray-400"
+                            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--content-muted)]"
                         />
 
                         <input
@@ -194,7 +194,7 @@ export default function StaffReportsPage() {
 
                             placeholder="ค้นหา"
 
-                            className="w-full rounded-xl border py-3 pl-11"
+                            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] py-3 pl-11 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
 
                         />
 
@@ -212,7 +212,7 @@ export default function StaffReportsPage() {
 
                         }
 
-                        className="rounded-xl border p-3"
+                        className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] focus:border-[var(--accent)] focus:outline-none"
 
                     >
 
@@ -255,7 +255,7 @@ export default function StaffReportsPage() {
 
                         }
 
-                        className="rounded-xl border p-3"
+                        className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] focus:border-[var(--accent)] focus:outline-none"
 
                     >
 
@@ -292,47 +292,47 @@ export default function StaffReportsPage() {
 
                     <table className="w-full">
 
-                        <thead className="bg-green-600 text-white">
+                        <thead className="bg-[var(--surface-muted)] text-[var(--content-muted)]">
 
                             <tr>
 
-                                <th className="p-4">
+                                <th className="p-4 text-left">
 
                                     รหัส
 
                                 </th>
 
-                                <th>
+                                <th className="p-4">
 
                                     ชื่อ
 
                                 </th>
 
-                                <th>
+                                <th className="p-4">
 
                                     สาขา
 
                                 </th>
 
-                                <th>
+                                <th className="p-4">
 
                                     ปี
 
                                 </th>
 
-                                <th>
+                                <th className="p-4">
                                     คะแนน
                                 </th>
-                                <th>
+                                <th className="p-4">
                                     ระดับ
                                 </th>
-                                <th>
+                                <th className="p-4">
                                     BPM
                                 </th>
-                                <th>
+                                <th className="p-4">
                                     SpO₂
                                 </th>
-                                <th>
+                                <th className="p-4">
                                     อาจารย์
                                 </th>
                             </tr>
@@ -344,7 +344,7 @@ export default function StaffReportsPage() {
 
                                     <td
                                         colSpan={9}
-                                        className="p-8 text-center text-gray-500"
+                                        className="p-8 text-center text-[var(--content-muted)]"
                                     >
 
                                         ไม่พบข้อมูล
@@ -365,7 +365,7 @@ export default function StaffReportsPage() {
 
                                             <tr
                                                 key={student.id}
-                                                className="border-b hover:bg-gray-50"
+                                                className="border-b border-[var(--border)] hover:bg-[var(--surface-muted)]"
                                             >
 
                                                 <td className="p-4">
@@ -374,36 +374,36 @@ export default function StaffReportsPage() {
 
                                                 </td>
 
-                                                <td>
+                                                <td className="p-4">
 
                                                     {student.fullname}
 
                                                 </td>
 
-                                                <td>
+                                                <td className="p-4">
 
                                                     {student.major.name}
 
                                                 </td>
 
-                                                <td className="text-center">
+                                                <td className="p-4 text-center">
 
                                                     ปี {student.year}
 
                                                 </td>
 
-                                                <td className="text-center font-bold">
+                                                <td className="p-4 text-center font-bold">
 
                                                     {result?.stressScore ?? "-"}
 
                                                 </td>
 
-                                                <td className="text-center">
+                                                <td className="p-4 text-center">
 
                                                     {result?.stressLevel ===
                                                         "LOW" ? (
 
-                                                        <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+                                                        <span className="status-low rounded-full px-3 py-1 text-sm font-semibold">
 
                                                             ต่ำ
 
@@ -412,7 +412,7 @@ export default function StaffReportsPage() {
                                                     ) : result?.stressLevel ===
                                                         "MEDIUM" ? (
 
-                                                        <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
+                                                        <span className="status-medium rounded-full px-3 py-1 text-sm font-semibold">
 
                                                             ปานกลาง
 
@@ -421,7 +421,7 @@ export default function StaffReportsPage() {
                                                     ) : result?.stressLevel ===
                                                         "HIGH" ? (
 
-                                                        <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700">
+                                                        <span className="status-high rounded-full px-3 py-1 text-sm font-semibold">
 
                                                             สูง
 
@@ -435,19 +435,19 @@ export default function StaffReportsPage() {
 
                                                 </td>
 
-                                                <td className="text-center">
+                                                <td className="p-4 text-center">
 
                                                     {result?.pulse?.bpm ?? "-"}
 
                                                 </td>
 
-                                                <td className="text-center">
+                                                <td className="p-4 text-center">
 
                                                     {result?.pulse?.spo2 ?? "-"}
 
                                                 </td>
 
-                                                <td>
+                                                <td className="p-4">
 
                                                     {student.advisor
                                                         ?.fullname ??
@@ -473,7 +473,7 @@ export default function StaffReportsPage() {
 
                 <div className="mt-6 flex items-center justify-between">
 
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[var(--content-muted)]">
 
                         ทั้งหมด {filtered.length} รายการ
 
@@ -482,7 +482,7 @@ export default function StaffReportsPage() {
                     <div className="flex gap-3">
 
                         <button
-                            className="rounded-lg border px-4 py-2 hover:bg-gray-100"
+                            className="rounded-lg border border-[var(--border)] px-4 py-2 text-[var(--content-text)] transition hover:bg-[var(--surface-muted)]"
                         >
 
                             Export Excel
@@ -490,7 +490,7 @@ export default function StaffReportsPage() {
                         </button>
 
                         <button
-                            className="rounded-lg border px-4 py-2 hover:bg-gray-100"
+                            className="rounded-lg border border-[var(--border)] px-4 py-2 text-[var(--content-text)] transition hover:bg-[var(--surface-muted)]"
                         >
 
                             Export PDF

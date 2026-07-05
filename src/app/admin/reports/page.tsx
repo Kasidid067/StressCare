@@ -43,11 +43,11 @@ export default function AdminReportsPage() {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-3xl font-bold text-[var(--content-text)]">
           รายงานผลการประเมินความเครียด
         </h1>
 
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-[var(--content-muted)]">
 
           ค้นหา กรอง และส่งออกรายงานผลการประเมิน
         </p>

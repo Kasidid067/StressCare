@@ -1,13 +1,8 @@
 export interface AdvisorStudent {
-
     id: number;
-
     studentId: string;
-
     fullname: string;
-
     year: number;
-
     major: {
         id: number;
         name: string;

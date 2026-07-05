@@ -22,7 +22,6 @@ export default function MajorPage() {
 
     async function handleSave() {
         try {
-
             if (editingId) {
                 await updateMajor(editingId, {
                     name,
@@ -93,7 +92,7 @@ export default function MajorPage() {
 
             </div>
 
-            <div className="rounded-xl bg-white shadow">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <table className="w-full">
 
@@ -179,7 +178,7 @@ export default function MajorPage() {
 
                 <div className="fixed inset-0 flex items-center justify-center bg-black/40">
 
-                    <div className="w-96 rounded-xl bg-white p-6 shadow-xl">
+                    <div className="w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl" style={{ boxShadow: "var(--shadow)" }}>
 
                         <h2 className="mb-4 text-xl font-bold">
 

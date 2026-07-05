@@ -63,7 +63,7 @@ export default function ProfilePage() {
         ข้อมูลส่วนตัว
       </h1>
 
-      <div className="rounded-2xl bg-white p-8 shadow space-y-5">
+      <div className="space-y-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
         <div>
           <label className="font-semibold">
@@ -73,7 +73,7 @@ export default function ProfilePage() {
           <input
             value={profile.studentId}
             disabled
-            className="mt-2 w-full rounded-xl border bg-gray-100 p-3"
+            className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)]"
           />
         </div>
 
@@ -99,7 +99,7 @@ export default function ProfilePage() {
           <input
             value={profile.email}
             disabled
-            className="mt-2 w-full rounded-xl border bg-gray-100 p-3"
+            className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)]"
           />
         </div>
 
@@ -127,7 +127,7 @@ export default function ProfilePage() {
             <input
               value={profile.major.name}
               disabled
-              className="mt-2 w-full rounded-xl border bg-gray-100 p-3"
+              className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)]"
             />
           </div>
 
@@ -139,7 +139,7 @@ export default function ProfilePage() {
             <input
               value={profile.year}
               disabled
-              className="mt-2 w-full rounded-xl border bg-gray-100 p-3"
+              className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)]"
             />
           </div>
 

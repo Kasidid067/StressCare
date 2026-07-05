@@ -17,12 +17,13 @@ export default function AdvisorReportsPage() {
         reports,
         loading,
     } = useAdvisorReports();
+    const safeReports = Array.isArray(reports) ? reports : [];
     const [keyword, setKeyword] =
         useState("");
     const filtered = useMemo(() => {
         const key =
             keyword.toLowerCase();
-        return reports.filter(
+        return safeReports.filter(
             (student: any) =>
                 student.fullname
                     ?.toLowerCase()
@@ -37,25 +38,25 @@ export default function AdvisorReportsPage() {
                     .includes(key)
         );
     }, [
-        reports,
+        safeReports,
         keyword,
     ]);
     const totalStudent =
-        reports.length;
+        safeReports.length;
     const high =
-        reports.filter(
+        safeReports.filter(
             (s: any) =>
                 s.results[0]?.stressLevel ===
                 "HIGH"
         ).length;
     const medium =
-        reports.filter(
+        safeReports.filter(
             (s: any) =>
                 s.results[0]?.stressLevel ===
                 "MEDIUM"
         ).length;
     const low =
-        reports.filter(
+        safeReports.filter(
             (s: any) =>
                 s.results[0]?.stressLevel ===
                 "LOW"
@@ -70,24 +71,24 @@ export default function AdvisorReportsPage() {
     return (
         <main className="space-y-8 p-10">
             <div>
-                <h1 className="text-5xl font-bold text-green-700">
+                <h1 className="text-5xl font-bold text-[var(--accent-strong)]">
                     รายงานนักศึกษา
                 </h1>
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-[var(--content-muted)]">
                     สรุปผลการประเมินของนักศึกษาในความดูแล
                 </p>
             </div>
 
             {/* Summary */}
             <div className="grid gap-6 md:grid-cols-4">
-                <div className="rounded-2xl bg-white p-6 shadow">
+                <div className="theme-card rounded-2xl p-6">
                     <div className="flex items-center gap-4">
                         <Users
-                            className="text-green-600"
+                            className="text-[var(--accent)]"
                             size={34}
                         />
                         <div>
-                            <p className="text-gray-500">
+                            <p className="text-[var(--content-muted)]">
                                 นักศึกษาทั้งหมด
                             </p>
                             <h2 className="text-4xl font-bold">
@@ -96,49 +97,49 @@ export default function AdvisorReportsPage() {
                         </div>
                     </div>
                 </div>
-                <div className="rounded-2xl bg-red-50 p-6 shadow">
+                <div className="theme-card-soft rounded-2xl p-6">
                     <div className="flex items-center gap-4">
                         <HeartPulse
-                            className="text-red-600"
+                            className="text-[var(--status-high-text)]"
                             size={34}
                         />
                         <div>
-                            <p>
+                            <p className="text-[var(--content-muted)]">
                                 ระดับสูง
                             </p>
-                            <h2 className="text-4xl font-bold text-red-600">
+                            <h2 className="text-4xl font-bold text-[var(--status-high-text)]">
                                 {high}
                             </h2>
                         </div>
                     </div>
                 </div>
-                <div className="rounded-2xl bg-yellow-50 p-6 shadow">
+                <div className="theme-card-soft rounded-2xl p-6">
                     <div className="flex items-center gap-4">
                         <Activity
-                            className="text-yellow-600"
+                            className="text-[var(--status-medium-text)]"
                             size={34}
                         />
                         <div>
-                            <p>
+                            <p className="text-[var(--content-muted)]">
                                 ระดับปานกลาง
                             </p>
-                            <h2 className="text-4xl font-bold text-yellow-600">
+                            <h2 className="text-4xl font-bold text-[var(--status-medium-text)]">
                                 {medium}
                             </h2>
                         </div>
                     </div>
                 </div>
-                <div className="rounded-2xl bg-green-50 p-6 shadow">
+                <div className="theme-card-soft rounded-2xl p-6">
                     <div className="flex items-center gap-4">
                         <ClipboardList
-                            className="text-green-600"
+                            className="text-[var(--status-low-text)]"
                             size={34}
                         />
                         <div>
-                            <p>
+                            <p className="text-[var(--content-muted)]">
                                 ระดับต่ำ
                             </p>
-                            <h2 className="text-4xl font-bold text-green-700">
+                            <h2 className="text-4xl font-bold text-[var(--status-low-text)]">
                                 {low}
                             </h2>
                         </div>
@@ -147,11 +148,11 @@ export default function AdvisorReportsPage() {
             </div>
 
             {/* Table */}
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="theme-card rounded-2xl p-8">
                 <div className="relative mb-8 max-w-md">
                     <Search
                         size={20}
-                        className="absolute left-4 top-4 text-gray-400"
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--content-muted)]"
                     />
                     <input
                         value={keyword}
@@ -161,13 +162,13 @@ export default function AdvisorReportsPage() {
                             )
                         }
                         placeholder="ค้นหานักศึกษา..."
-                        className="w-full rounded-xl border py-3 pl-11 pr-4"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 pl-11 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                     />
                 </div>
             </div>
-            <div className="overflow-x-auto">
+            <div className="theme-card overflow-x-auto rounded-2xl">
                 <table className="w-full">
-                    <thead className="bg-green-600 text-white">
+                    <thead className="bg-[var(--surface-muted)] text-[var(--content-muted)]">
                         <tr>
                             <th className="p-4">
                                 รหัส
@@ -204,7 +205,7 @@ export default function AdvisorReportsPage() {
                             <tr>
                                 <td
                                     colSpan={9}
-                                    className="p-8 text-center text-gray-500"
+                                    className="p-8 text-center text-[var(--content-muted)]"
                                 >
                                     ไม่พบข้อมูลนักศึกษา
                                 </td>
@@ -221,7 +222,7 @@ export default function AdvisorReportsPage() {
                                                 `/advisor/students/${student.id}`
                                             )
                                         }
-                                        className="cursor-pointer border-b transition hover:bg-green-50"
+                                        className="cursor-pointer border-b border-[var(--border)] transition hover:bg-[var(--surface-muted)]"
                                     >
                                         <td className="p-4">
                                             {student.studentId}
@@ -238,17 +239,17 @@ export default function AdvisorReportsPage() {
                                         <td className="text-center">
                                             {result?.stressLevel ===
                                                 "HIGH" ? (
-                                                <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-600">
+                                                <span className="status-high rounded-full px-3 py-1 text-sm font-semibold">
                                                     สูง
                                                 </span>
                                             ) : result?.stressLevel ===
                                                 "MEDIUM" ? (
-                                                <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
+                                                <span className="status-medium rounded-full px-3 py-1 text-sm font-semibold">
                                                     ปานกลาง
                                                 </span>
                                             ) : result?.stressLevel ===
                                                 "LOW" ? (
-                                                <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+                                                <span className="status-low rounded-full px-3 py-1 text-sm font-semibold">
                                                     ต่ำ
                                                 </span>
                                             ) : (
@@ -278,7 +279,7 @@ export default function AdvisorReportsPage() {
                                                         `/advisor/students/${student.id}`
                                                     );
                                                 }}
-                                                className="rounded-lg bg-green-600 px-4 py-2 text-white transition hover:bg-green-700"
+                                                className="rounded-lg bg-[var(--accent)] px-4 py-2 text-white transition hover:opacity-90"
                                             >
                                                 ดูรายละเอียด
                                             </button>
@@ -290,7 +291,7 @@ export default function AdvisorReportsPage() {
                     </tbody>
                 </table>
             </div>
-            <div className="mt-6 text-right text-sm text-gray-500">
+            <div className="mt-6 text-right text-sm text-[var(--content-muted)]">
                 พบทั้งหมด {filtered.length} รายการ
             </div>
         </main>

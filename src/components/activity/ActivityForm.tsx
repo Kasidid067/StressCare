@@ -72,7 +72,7 @@ export default function ActivityForm({
     }
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-xl">
+            <div className="theme-card w-full max-w-xl rounded-2xl p-6">
                 <h2 className="mb-6 text-2xl font-bold">
                     {initialData
                         ? "แก้ไขกิจกรรม"
@@ -81,7 +81,7 @@ export default function ActivityForm({
 
                 <div className="space-y-4">
                     <input
-                        className="w-full rounded-xl border p-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         placeholder="ชื่อกิจกรรม"
                         value={form.title}
                         onChange={(e) =>
@@ -92,7 +92,7 @@ export default function ActivityForm({
                         }
                     />
                     <textarea
-                        className="w-full rounded-xl border p-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         rows={4}
                         placeholder="รายละเอียด"
                         value={form.description}
@@ -105,7 +105,7 @@ export default function ActivityForm({
                     />
                     <input
                         type="number"
-                        className="w-full rounded-xl border p-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         placeholder="ระยะเวลา"
                         value={form.duration}
                         onChange={(e) =>
@@ -116,7 +116,7 @@ export default function ActivityForm({
                         }
                     />
                     <select
-                        className="w-full rounded-xl border p-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         value={form.category}
                         onChange={(e) =>
                             setForm({
@@ -132,7 +132,7 @@ export default function ActivityForm({
                         <option value="OTHER">อื่น ๆ</option>
                     </select>
                     <select
-                        className="w-full rounded-xl border p-3"
+                        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         value={form.stressLevel}
                         onChange={(e) =>
                             setForm({

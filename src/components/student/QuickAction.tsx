@@ -4,7 +4,7 @@ export default function QuickAction() {
 
     return (
 
-        <div className="rounded-xl bg-white p-6 shadow">
+        <div className="theme-card rounded-xl p-6">
 
             <h2 className="mb-4 text-xl font-bold">
 

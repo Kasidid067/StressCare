@@ -17,8 +17,8 @@ export default function AssessmentHistoryTable({
 
     if (history.length === 0) {
         return (
-            <div className="rounded-xl bg-white p-10 text-center shadow">
-                <p className="text-gray-500">
+            <div className="theme-card rounded-xl p-10 text-center">
+                <p className="text-[var(--content-muted)]">
                     ยังไม่มีประวัติการประเมิน
                 </p>
             </div>
@@ -26,11 +26,11 @@ export default function AssessmentHistoryTable({
     }
 
     return (
-        <div className="overflow-hidden rounded-2xl bg-white shadow">
+        <div className="theme-card overflow-hidden rounded-2xl">
 
             <table className="w-full">
 
-                <thead className="bg-green-600 text-white">
+                <thead className="bg-[var(--accent)] text-white">
 
                     <tr>
 
@@ -68,7 +68,7 @@ export default function AssessmentHistoryTable({
 
                         <tr
                             key={item.id}
-                            className="border-b hover:bg-gray-50"
+                            className="border-b border-[var(--border)] hover:bg-[var(--surface-muted)]"
                         >
 
                             <td className="p-4">
@@ -93,10 +93,10 @@ export default function AssessmentHistoryTable({
                                     className={`rounded-full px-3 py-1 text-sm font-semibold
 
 ${item.stressLevel === "LOW"
-                                            ? "bg-green-100 text-green-700"
+                                            ? "status-low"
                                             : item.stressLevel === "MEDIUM"
-                                                ? "bg-yellow-100 text-yellow-700"
-                                                : "bg-red-100 text-red-700"
+                                                ? "status-medium"
+                                                : "status-high"
                                         }
 
 `}
@@ -128,7 +128,7 @@ ${item.stressLevel === "LOW"
                                         onView(item)
                                     }
 
-                                    className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+                                    className="inline-flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
 
                                 >
 

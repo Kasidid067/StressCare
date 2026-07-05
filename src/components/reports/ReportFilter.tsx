@@ -29,7 +29,7 @@ export default function ReportFilter({
         loadMajors();
     }, []);
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <h2 className="mb-4 text-xl font-semibold">
                 ตัวกรองข้อมูล
             </h2>

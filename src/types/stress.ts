@@ -18,21 +18,21 @@ Record<
     LOW: {
         emoji: "😊",
         text: "ความเครียดต่ำ",
-        color: "text-green-600",
-        bg: "bg-green-50",
+        color: "text-emerald-600 dark:text-emerald-400",
+        bg: "bg-emerald-500/10",
     },
 
     MEDIUM: {
         emoji: "😐",
         text: "ความเครียดปานกลาง",
-        color: "text-yellow-600",
-        bg: "bg-yellow-50",
+        color: "text-amber-600 dark:text-amber-400",
+        bg: "bg-amber-500/10",
     },
 
     HIGH: {
         emoji: "😟",
         text: "ความเครียดสูง",
-        color: "text-red-600",
-        bg: "bg-red-50",
+        color: "text-rose-600 dark:text-rose-400",
+        bg: "bg-rose-500/10",
     },
 };

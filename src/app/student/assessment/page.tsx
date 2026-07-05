@@ -77,7 +77,7 @@ export default function AssessmentPage() {
                     แบบประเมิน ST-5
                 </h1>
 
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-[var(--content-muted)]">
                     กรุณาเลือกคำตอบที่ตรงกับความรู้สึกของคุณในช่วง
                     2-4 สัปดาห์ที่ผ่านมา
                 </p>

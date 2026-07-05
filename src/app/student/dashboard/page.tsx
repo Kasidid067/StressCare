@@ -48,7 +48,7 @@ export default function StudentDashboardPage() {
                 />
                 <QuickAction />
 
-                <div className="rounded-2xl bg-white p-6 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
                     <h2 className="mb-4 text-xl font-bold">
                         สรุป
                     </h2>

@@ -38,6 +38,7 @@
     "@types/cookie": "^0.6.0",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
+    "@types/pdfmake": "^0.3.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

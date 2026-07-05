@@ -2,15 +2,27 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 
-export const {
-  handlers,
-  signIn,
-  signOut,
-  auth,
-} = NextAuth({
+function isAuthBypassEnabled() {
+  return (
+    process.env.NEXT_PUBLIC_AUTH_BYPASS === "true" ||
+    process.env.AUTH_BYPASS === "true"
+  );
+}
+
+const fakeSession = {
+  user: {
+    id: "1",
+    name: "Development User",
+    email: "dev@example.com",
+    role: "ADMIN",
+  },
+};
+
+const nextAuth = NextAuth({
   adapter: PrismaAdapter(prisma),
 
   session: {
@@ -109,3 +121,17 @@ export const {
     },
   },
 });
+
+export const {
+  handlers,
+  signIn,
+  signOut,
+} = nextAuth;
+
+export async function auth() {
+  if (isAuthBypassEnabled()) {
+    return fakeSession;
+  }
+
+  return nextAuth.auth();
+}

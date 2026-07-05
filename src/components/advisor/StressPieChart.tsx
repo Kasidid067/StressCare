@@ -8,6 +8,7 @@ import {
     ResponsiveContainer,
     Legend,
 } from "recharts";
+import { PieChart as PieChartIcon } from "lucide-react";
 
 interface Props {
     low: number;
@@ -43,9 +44,10 @@ export default function StressPieChart({
     ];
 
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
-            <h2 className="mb-6 text-2xl font-bold">
-                📊 สัดส่วนระดับความเครียด
+        <div className="theme-card rounded-2xl p-6">
+            <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
+                <PieChartIcon className="text-[var(--accent-strong)]" size={22} />
+                สัดส่วนระดับความเครียด
             </h2>
             <ResponsiveContainer
                 width="100%"

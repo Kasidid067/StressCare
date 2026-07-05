@@ -30,26 +30,26 @@ export default function StudentHistoryPage() {
                 <h1 className="text-3xl font-bold text-green-700">
                     ประวัติการทำกิจกรรม
                 </h1>
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-[var(--content-muted)]">
                     รายการกิจกรรมที่ทำเสร็จแล้ว
                 </p>
             </div>
             {logs.length === 0 && (
-                <div className="rounded-2xl bg-white p-10 text-center shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 text-center shadow" style={{ boxShadow: "var(--shadow)" }}>
                     <div className="text-6xl">
                         📋
                     </div>
                     <h2 className="mt-4 text-2xl font-bold">
                         ยังไม่มีประวัติ
                     </h2>
-                    <p className="mt-2 text-gray-500">
+                    <p className="mt-2 text-[var(--content-muted)]">
                         เมื่อทำกิจกรรมแล้วจะปรากฏที่หน้านี้
                     </p>
                 </div>
             )}
 
             {logs.length > 0 && (
-                <div className="overflow-hidden rounded-2xl bg-white shadow">
+                <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow" style={{ boxShadow: "var(--shadow)" }}>
                     <table className="w-full">
                         <thead className="bg-green-600 text-white">
                             <tr>

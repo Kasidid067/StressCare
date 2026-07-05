@@ -9,22 +9,18 @@ export default function AdvisorLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar />
 
       <div className="flex flex-1 flex-col">
-
         <Navbar />
 
-        <main className="flex-1 overflow-y-auto p-6">
-
-          {children}
-
+        <main className="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_left,_rgba(20,184,166,0.12),_transparent_35%),linear-gradient(135deg,_rgba(255,255,255,0.45),_rgba(248,250,252,0.9))] p-6 dark:bg-[radial-gradient(circle_at_top_left,_rgba(45,212,191,0.14),_transparent_35%),linear-gradient(135deg,_rgba(15,23,42,0.8),_rgba(15,23,42,1))]">
+          <div className="mx-auto max-w-7xl">
+            {children}
+          </div>
         </main>
-
       </div>
-
     </div>
   );
 }

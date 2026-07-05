@@ -7,48 +7,79 @@ import {
     StressLevel,
 } from "@prisma/client";
 
-export async function GET() {
+interface Params {
+    params: Promise<{
+        id: string;
+    }>;
+}
+
+// =========================
+// GET Activity By ID
+// =========================
+export async function GET(
+    req: Request,
+    { params }: Params
+) {
     const session = await auth();
     if (
         !session?.user ||
         session.user.role !== Role.ADMIN
     ) {
         return NextResponse.json(
-            { message: "Forbidden" },
-            { status: 403 }
+            {
+                message: "Forbidden",
+            },
+            {
+                status: 403,
+            }
         );
-
     }
-
-    const activities =
-        await prisma.activity.findMany({
-            orderBy: {
-                createdAt: "desc",
+    const { id } = await params;
+    const activity =
+        await prisma.activity.findUnique({
+            where: {
+                id: Number(id),
             },
         });
+    if (!activity) {
+        return NextResponse.json(
+            {
+                message: "ไม่พบกิจกรรม",
+            },
+            {
+                status: 404,
+            }
+        );
+    }
     return NextResponse.json(
-        activities
+        activity
     );
 }
 
-export async function POST(
-    req: Request
+// =========================
+// UPDATE
+// =========================
+export async function PUT(
+    req: Request,
+    { params }: Params
 ) {
-
     const session = await auth();
     if (
         !session?.user ||
         session.user.role !== Role.ADMIN
     ) {
         return NextResponse.json(
-            { message: "Forbidden" },
-            { status: 403 }
+            {
+                message: "Forbidden",
+            },
+            {
+                status: 403,
+            }
         );
-
     }
+    const { id } = await params;
     const body =
         await req.json();
-
     const {
         title,
         description,
@@ -57,23 +88,11 @@ export async function POST(
         category,
         image,
     } = body;
-    if (
-        !title ||
-        !description ||
-        !duration
-    ) {
-        return NextResponse.json(
-            {
-                message:
-                    "กรอกข้อมูลไม่ครบ",
-            },
-            {
-                status: 400,
-            }
-        );
-    }
     const activity =
-        await prisma.activity.create({
+        await prisma.activity.update({
+            where: {
+                id: Number(id),
+            },
             data: {
                 title,
                 description,
@@ -90,4 +109,55 @@ export async function POST(
     return NextResponse.json(
         activity
     );
+}
+
+// =========================
+// DELETE
+// =========================
+export async function DELETE(
+    req: Request,
+    { params }: Params
+) {
+    const session = await auth();
+    if (
+        !session?.user ||
+        session.user.role !== Role.ADMIN
+    ) {
+        return NextResponse.json(
+            {
+                message: "Forbidden",
+            },
+            {
+                status: 403,
+            }
+        );
+    }
+    const { id } = await params;
+    // ป้องกันลบถ้ามี ActivityLog อ้างอิง
+    const logCount =
+        await prisma.activityLog.count({
+            where: {
+                activityId:
+                    Number(id),
+            },
+        });
+    if (logCount > 0) {
+        return NextResponse.json(
+            {
+                message:
+                    "ไม่สามารถลบกิจกรรมนี้ได้ เนื่องจากมีประวัติการใช้งานแล้ว",
+            },
+            {
+                status: 400,
+            }
+        );
+    }
+    await prisma.activity.delete({
+        where: {
+            id: Number(id),
+        },
+    });
+    return NextResponse.json({
+        success: true,
+    });
 }

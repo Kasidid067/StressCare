@@ -1,29 +1,71 @@
 "use client";
 
-import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { useAdminUsers } from "@/hooks/useAdminUsers";
-import { deleteUser } from "@/services/adminUserDetail.service";
+import { useAdminUser } from "@/hooks/useAdminUser";
+import { useMajor } from "@/hooks/useMajor";
+import { useAdvisor } from "@/hooks/useAdvisor";
+import { updateUser } from "@/services/adminUserDetail.service";
 
-export default function UsersPage() {
-    const { users, loading } = useAdminUsers();
+export default function EditUserPage() {
+    const params = useParams();
+    const router = useRouter();
 
-    async function handleDelete(id: number, fullname: string) {
-        const confirmDelete = window.confirm(
-            `ต้องการลบ ${fullname} ใช่หรือไม่`
-        );
+    const id = Number(params.id);
 
-        if (!confirmDelete) return;
+    const { user, loading } = useAdminUser(id);
+    const { majors } = useMajor();
+    const { advisors } = useAdvisor();
+
+    const [form, setForm] = useState({
+        fullname: "",
+        email: "",
+        phone: "",
+        password: "",
+        role: "STUDENT",
+        year: 1,
+        majorId: 1,
+        advisorId: "",
+        status: "ACTIVE",
+    });
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    useEffect(() => {
+        if (!user) return;
+
+        setForm({
+            fullname: user.fullname,
+            email: user.email,
+            phone: user.phone ?? "",
+            password: "",
+            role: user.role,
+            year: user.year,
+            majorId: user.majorId,
+            advisorId: user.advisorId?.toString() ?? "",
+            status: user.status,
+        });
+    }, [user]);
+
+    async function handleSubmit(
+        e: React.FormEvent<HTMLFormElement>
+    ) {
+        e.preventDefault();
 
         try {
-            await deleteUser(id);
+            await updateUser(id, {
+                ...form,
+                advisorId: form.advisorId
+                    ? Number(form.advisorId)
+                    : null,
+            });
 
-            toast.success("ลบผู้ใช้งานสำเร็จ");
+            toast.success("บันทึกสำเร็จ");
 
-            window.location.reload();
+            router.refresh();
         } catch {
-            toast.error("ไม่สามารถลบผู้ใช้งานได้");
+            toast.error("เกิดข้อผิดพลาด");
         }
     }
 
@@ -31,133 +73,201 @@ export default function UsersPage() {
         return <div>กำลังโหลด...</div>;
     }
 
+    if (!user) {
+        return <div>ไม่พบข้อมูล</div>;
+    }
+
     return (
-        <main className="p-8">
+        <main className="mx-auto max-w-3xl p-8">
 
-            <div className="mb-6 flex items-center justify-between">
+            <h1 className="mb-8 text-3xl font-bold text-green-700">
+                แก้ไขผู้ใช้งาน
+            </h1>
 
-                <h1 className="text-3xl font-bold text-green-700">
-                    จัดการผู้ใช้งาน
-                </h1>
+            <form
+                onSubmit={handleSubmit}
+                className="space-y-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}
+            >
 
-                <Link
-                    href="/admin/users/create"
-                    className="rounded-xl bg-green-600 px-5 py-3 text-white"
-                >
-                    + เพิ่มผู้ใช้
-                </Link>
+                <input
+                    className="w-full rounded-xl border p-3"
+                    value={form.fullname}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            fullname: e.target.value,
+                        })
+                    }
+                    placeholder="ชื่อ"
+                />
 
-            </div>
+                <input
+                    className="w-full rounded-xl border p-3"
+                    value={form.email}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            email: e.target.value,
+                        })
+                    }
+                    placeholder="Email"
+                />
 
-            <div className="overflow-hidden rounded-xl bg-white shadow">
+                <input
+                    className="w-full rounded-xl border p-3"
+                    value={form.phone}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            phone: e.target.value,
+                        })
+                    }
+                    placeholder="เบอร์โทร"
+                />
 
-                <table className="w-full">
+                <label className="block">
+                    <span className="mb-2 block font-medium">
+                        สาขา
+                    </span>
 
-                    <thead className="bg-green-600 text-white">
-
-                        <tr>
-
-                            <th className="p-3">
-                                รหัส
-                            </th>
-
-                            <th>
-                                ชื่อ
-                            </th>
-
-                            <th>
-                                Role
-                            </th>
-
-                            <th>
-                                สาขา
-                            </th>
-
-                            <th>
-                                Advisor
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                จัดการ
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {users.map((user) => (
-
-                            <tr
-                                key={user.id}
-                                className="border-b"
+                    <select
+                        value={form.majorId}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                majorId: Number(e.target.value),
+                            })
+                        }
+                        className="w-full rounded-xl border p-3"
+                    >
+                        {majors.map((major) => (
+                            <option
+                                key={major.id}
+                                value={major.id}
                             >
+                                {major.name}
+                            </option>
+                        ))}
+                    </select>
+                </label>
 
-                                <td className="p-3">
-                                    {user.studentId}
-                                </td>
+                <label className="block">
+                    <span className="mb-2 block font-medium">
+                        ชั้นปี
+                    </span>
 
-                                <td>
-                                    {user.fullname}
-                                </td>
+                    <input
+                        type="number"
+                        min={1}
+                        max={8}
+                        value={form.year}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                year: Number(e.target.value),
+                            })
+                        }
+                        className="w-full rounded-xl border p-3"
+                    />
+                </label>
 
-                                <td>
-                                    {user.role}
-                                </td>
+                <label className="block">
+                    <span className="mb-2 block font-medium">
+                        สิทธิ์ผู้ใช้งาน
+                    </span>
 
-                                <td>
-                                    {user.major.name}
-                                </td>
+                    <select
+                        value={form.role}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                role: e.target.value,
+                            })
+                        }
+                        className="w-full rounded-xl border p-3"
+                    >
+                        <option value="STUDENT">Student</option>
+                        <option value="ADVISOR">Advisor</option>
+                        <option value="STAFF">Staff</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </label>
 
-                                <td>
-                                    {user.advisor?.fullname ?? "-"}
-                                </td>
+                <label className="block">
+                    <span className="mb-2 block font-medium">
+                        สถานะ
+                    </span>
 
-                                <td>
-                                    {user.status}
-                                </td>
+                    <select
+                        value={form.status}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                status: e.target.value,
+                            })
+                        }
+                        className="w-full rounded-xl border p-3"
+                    >
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                </label>
 
-                                <td>
+                <label className="block">
+                    <span className="mb-2 block font-medium">
+                        อาจารย์ที่ปรึกษา
+                    </span>
 
-                                    <div className="flex gap-3">
+                    <select
+                        value={form.advisorId}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                advisorId: e.target.value,
+                            })
+                        }
+                        className="w-full rounded-xl border p-3"
+                    >
 
-                                        <Link
-                                            href={`/admin/users/${user.id}`}
-                                            className="text-green-700 hover:underline"
-                                        >
-                                            แก้ไข
-                                        </Link>
+                        <option value="">
+                            -- ไม่มี --
+                        </option>
 
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(
-                                                    user.id,
-                                                    user.fullname
-                                                )
-                                            }
-                                            className="text-red-600 hover:underline"
-                                        >
-                                            ลบ
-                                        </button>
+                        {advisors.map((advisor) => (
 
-                                    </div>
-
-                                </td>
-
-                            </tr>
+                            <option
+                                key={advisor.id}
+                                value={advisor.id}
+                            >
+                                {advisor.fullname}
+                            </option>
 
                         ))}
 
-                    </tbody>
+                    </select>
 
-                </table>
+                </label>
 
-            </div>
+                <input
+                    type="password"
+                    className="w-full rounded-xl border p-3"
+                    value={form.password}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            password: e.target.value,
+                        })
+                    }
+                    placeholder="รหัสผ่านใหม่ (เว้นว่างหากไม่เปลี่ยน)"
+                />
+
+                <button
+                    className="rounded-xl bg-green-600 px-6 py-3 text-white"
+                >
+                    บันทึก
+                </button>
+
+            </form>
 
         </main>
     );

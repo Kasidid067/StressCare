@@ -18,9 +18,9 @@ interface Props {
 import DashboardSection from "./DashboardSection";
 
 const COLORS = [
-    "#22c55e",
-    "#facc15",
-    "#ef4444",
+    "var(--status-low-text)",
+    "var(--status-medium-text)",
+    "var(--status-high-text)",
 ];
 
 export default function StressPieChart({
@@ -51,7 +51,7 @@ export default function StressPieChart({
                             data={data}
                             dataKey="value"
                             outerRadius={110}
-                            label
+                            label={{ fill: "var(--content-text)" }}
                         >
                             {data.map((_, index) => (
                                 <Cell
@@ -60,8 +60,17 @@ export default function StressPieChart({
                                 />
                             ))}
                         </Pie>
-                        <Tooltip />
-                        <Legend />
+                        <Tooltip
+                            contentStyle={{
+                                background: "var(--surface)",
+                                border: "1px solid var(--border)",
+                                borderRadius: "0.75rem",
+                                color: "var(--content-text)",
+                            }}
+                        />
+                        <Legend
+                            wrapperStyle={{ color: "var(--content-muted)" }}
+                        />
                     </PieChart>
                 </ResponsiveContainer>
             </div>

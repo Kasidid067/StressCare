@@ -42,14 +42,14 @@ export default function StressHistoryChart({
         }));
 
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <div className="mb-6 flex items-center justify-between">
                 <div>
                     <h2 className="text-2xl font-bold">
                         📈 แนวโน้มคะแนนความเครียด
                     </h2>
 
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[var(--content-muted)]">
                         คะแนนย้อนหลังของคุณ
                     </p>
                 </div>

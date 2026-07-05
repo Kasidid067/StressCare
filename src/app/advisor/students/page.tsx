@@ -1,67 +1,37 @@
 "use client";
 
-import { useMemo, useState } from "react";
-
-import { Search } from "lucide-react";
+import { useParams } from "next/navigation";
 
 import {
-    useAdvisorStudents,
-} from "@/hooks/useAdvisorStudents";
-import Link from "next/link";
+    User,
+    HeartPulse,
+    Brain,
+    Activity,
+} from "lucide-react";
 
-export default function AdvisorStudentsPage() {
+import {
+    useAdvisorStudentDetail,
+} from "@/hooks/useAdvisorStudentDetail";
+
+export default function AdvisorStudentDetailPage() {
+
+    const params = useParams();
 
     const {
 
-        students,
+        student,
 
         loading,
 
-    } = useAdvisorStudents();
-
-    const [
-
-        keyword,
-
-        setKeyword,
-
-    ] = useState("");
-
-    const filtered =
-        useMemo(() => {
-
-            const key =
-                keyword.toLowerCase();
-
-            return students.filter(
-
-                student =>
-
-                    student.fullname
-                        .toLowerCase()
-                        .includes(key)
-
-                    ||
-
-                    student.studentId
-                        .toLowerCase()
-                        .includes(key)
-
-            );
-
-        }, [
-
-            students,
-
-            keyword,
-
-        ]);
+    } = useAdvisorStudentDetail(
+        Number(params.id)
+    );
 
     if (loading) {
 
         return (
 
-            <main className="p-8">
+            <main className="flex h-[70vh] items-center justify-center">
 
                 กำลังโหลด...
 
@@ -71,46 +41,368 @@ export default function AdvisorStudentsPage() {
 
     }
 
+    if (!student) {
+
+        return (
+
+            <main className="flex h-[70vh] items-center justify-center">
+
+                ไม่พบข้อมูล
+
+            </main>
+
+        );
+
+    }
+
+    const latest =
+        student.results[0];
+
     return (
 
         <main className="space-y-8 p-8">
 
-            <div>
+            {/* Header */}
 
-                <h1 className="text-4xl font-bold text-green-700">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    นักศึกษาในความดูแล
+                <div className="flex items-center gap-6">
 
-                </h1>
+                    <div className="rounded-full bg-[var(--surface-muted)] p-6">
+
+                        <User
+                            size={45}
+                            className="text-[var(--accent-strong)]"
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <h1 className="text-3xl font-bold">
+
+                            {student.fullname}
+
+                        </h1>
+
+                        <p className="mt-2 text-[var(--content-muted)]">
+
+                            {student.studentId}
+
+                        </p>
+
+                        <p className="text-[var(--content-muted)]">
+
+                            {student.major.name}
+
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div className="rounded-2xl bg-white p-6 shadow">
+            {/* Summary */}
 
-                <div className="relative mb-6 max-w-md">
+            <div className="grid gap-6 md:grid-cols-4">
 
-                    <Search
-                        size={18}
-                        className="absolute left-4 top-4"
-                    />
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    <input
+                    <p className="text-[var(--content-muted)]">
 
-                        value={keyword}
+                        คะแนนล่าสุด
 
-                        onChange={e =>
-                            setKeyword(
-                                e.target.value
+                    </p>
+
+                    <h2 className="mt-3 text-4xl font-bold">
+
+                        {
+
+                            latest
+                                ?.stressScore ?? "-"
+
+                        }
+
+                    </h2>
+
+                </div>
+
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                    <div className="flex items-center gap-2">
+
+                        <HeartPulse />
+
+                        BPM
+
+                    </div>
+
+                    <h2 className="mt-3 text-4xl font-bold">
+
+                        {
+
+                            latest
+                                ?.pulse?.bpm ?? "-"
+
+                        }
+
+                    </h2>
+
+                </div>
+
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                    <p className="text-[var(--content-muted)]">
+
+                        ระดับ
+
+                    </p>
+
+                    <h2 className="mt-3">
+
+                        {
+                            latest?.stressLevel === "HIGH" ? (
+                                <span className="status-high inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    สูง
+                                </span>
+                            ) : latest?.stressLevel === "MEDIUM" ? (
+                                <span className="status-medium inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    ปานกลาง
+                                </span>
+                            ) : latest?.stressLevel === "LOW" ? (
+                                <span className="status-low inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    ต่ำ
+                                </span>
+                            ) : (
+                                <span className="text-3xl font-bold">-</span>
                             )
                         }
 
-                        className="w-full rounded-xl border py-3 pl-11"
-
-                        placeholder="ค้นหา"
-
-                    />
+                    </h2>
 
                 </div>
+
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                    <p className="text-[var(--content-muted)]">
+
+                        SpO₂
+
+                    </p>
+
+                    <h2 className="mt-3 text-4xl font-bold">
+
+                        {
+
+                            latest
+                                ?.pulse?.spo2 ?? "-"
+
+                        }
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+            {/* AI */}
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
+
+                    <Brain />
+
+                    AI Summary
+
+                </h2>
+
+                <p>
+
+                    {
+
+                        latest
+                            ?.aiSummary ??
+
+                        "-"
+
+                    }
+
+                </p>
+
+            </div>
+
+            {/* Recommendation */}
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                <h2 className="mb-6 text-2xl font-bold">
+
+                    Recommendation
+
+                </h2>
+
+                <p>
+
+                    {
+
+                        latest
+                            ?.recommendation ??
+
+                        "-"
+
+                    }
+
+                </p>
+
+            </div>
+
+            {/* ST5 History */}
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                <h2 className="mb-6 text-2xl font-bold">
+
+                    ประวัติการประเมิน ST-5
+
+                </h2>
+
+                <div className="overflow-x-auto rounded-xl">
+
+                    <table className="w-full">
+
+                        <thead>
+
+                            <tr className="border-b border-[var(--border)] bg-[var(--surface-muted)] text-[var(--content-muted)]">
+
+                                <th className="p-4 text-left">
+
+                                    วันที่
+
+                                </th>
+
+                                <th>
+
+                                    คะแนน
+
+                                </th>
+
+                                <th>
+
+                                    ระดับ
+
+                                </th>
+
+                                <th>
+
+                                    BPM
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {
+
+                                student.results.map(
+                                    (
+                                        item: any
+                                    ) => (
+
+                                        <tr
+                                            key={
+                                                item.id
+                                            }
+                                            className="border-b border-[var(--border)] transition hover:bg-[var(--surface-muted)]"
+                                        >
+
+                                            <td className="p-4">
+
+                                                {
+
+                                                    new Date(
+                                                        item.createdAt
+                                                    ).toLocaleString(
+                                                        "th-TH"
+                                                    )
+
+                                                }
+
+                                            </td>
+
+                                            <td className="text-center">
+
+                                                {
+
+                                                    item.stressScore
+
+                                                }
+
+                                            </td>
+
+                                            <td className="text-center">
+
+                                                {
+                                                    item.stressLevel === "HIGH" ? (
+                                                        <span className="status-high rounded-full px-3 py-1 text-sm font-semibold">
+                                                            สูง
+                                                        </span>
+                                                    ) : item.stressLevel === "MEDIUM" ? (
+                                                        <span className="status-medium rounded-full px-3 py-1 text-sm font-semibold">
+                                                            ปานกลาง
+                                                        </span>
+                                                    ) : item.stressLevel === "LOW" ? (
+                                                        <span className="status-low rounded-full px-3 py-1 text-sm font-semibold">
+                                                            ต่ำ
+                                                        </span>
+                                                    ) : (
+                                                        item.stressLevel
+                                                    )
+                                                }
+
+                                            </td>
+
+                                            <td className="text-center">
+
+                                                {
+
+                                                    item.pulse?.bpm ??
+                                                    "-"
+
+                                                }
+
+                                            </td>
+
+                                        </tr>
+
+                                    )
+
+                                )
+
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+                        {/* Pulse History */}
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
+
+                    <HeartPulse />
+
+                    ประวัติการวัดชีพจร
+
+                </h2>
 
                 <table className="w-full">
 
@@ -120,31 +412,7 @@ export default function AdvisorStudentsPage() {
 
                             <th className="p-4 text-left">
 
-                                รหัส
-
-                            </th>
-
-                            <th>
-
-                                ชื่อ
-
-                            </th>
-
-                            <th>
-
-                                สาขา
-
-                            </th>
-
-                            <th>
-
-                                คะแนน
-
-                            </th>
-
-                            <th>
-
-                                ระดับ
+                                วันที่
 
                             </th>
 
@@ -156,7 +424,7 @@ export default function AdvisorStudentsPage() {
 
                             <th>
 
-                                ดู
+                                SpO₂
 
                             </th>
 
@@ -166,87 +434,217 @@ export default function AdvisorStudentsPage() {
 
                     <tbody>
 
-                        {
+                        {student.results.map((item: any) => (
 
-                            filtered.map(student => (
+                            <tr
+                                key={`pulse-${item.id}`}
+                                className="border-b"
+                            >
 
-                                <tr
-                                    key={student.id}
-                                    className="border-b"
-                                >
+                                <td className="p-4">
 
-                                    <td className="p-4">
+                                    {new Date(
+                                        item.createdAt
+                                    ).toLocaleString(
+                                        "th-TH"
+                                    )}
 
-                                        {student.studentId}
+                                </td>
 
-                                    </td>
+                                <td className="text-center">
 
-                                    <td>
+                                    {item.pulse?.bpm ?? "-"}
 
-                                        {student.fullname}
+                                </td>
 
-                                    </td>
+                                <td className="text-center">
 
-                                    <td>
+                                    {item.pulse?.spo2 ?? "-"}
 
-                                        {student.major.name}
+                                </td>
 
-                                    </td>
+                            </tr>
 
-                                    <td>
-
-                                        {
-
-                                            student.results[0]
-                                                ?.stressScore ?? "-"
-
-                                        }
-
-                                    </td>
-
-                                    <td>
-
-                                        {
-
-                                            student.results[0]
-                                                ?.stressLevel ?? "-"
-
-                                        }
-
-                                    </td>
-
-                                    <td>
-
-                                        {
-
-                                            student.results[0]
-                                                ?.pulse?.bpm ?? "-"
-
-                                        }
-
-                                    </td>
-
-                                    <td>
-
-                                        <Link
-                                            href={`/advisor/students/${student.id}`}
-                                            className="rounded-lg bg-green-600 px-4 py-2 text-white"
-                                        >
-                                            ดูรายละเอียด
-                                        </Link>
-                                    </td>
-
-                                </tr>
-
-                            ))
-
-                        }
+                        ))}
 
                     </tbody>
 
                 </table>
 
             </div>
+
+            {/* Activity History */}
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
+
+                    <Activity />
+
+                    ประวัติการทำกิจกรรม
+
+                </h2>
+
+                <table className="w-full">
+
+                    <thead>
+
+                        <tr className="border-b">
+
+                            <th className="p-4 text-left">
+
+                                วันที่
+
+                            </th>
+
+                            <th>
+
+                                กิจกรรม
+
+                            </th>
+
+                            <th>
+
+                                ระยะเวลา
+
+                            </th>
+
+                            <th>
+
+                                สถานะ
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {student.activityLogs.length === 0 ? (
+
+                            <tr>
+
+                                <td
+                                    colSpan={4}
+                                    className="p-8 text-center text-[var(--content-muted)]"
+                                >
+
+                                    ยังไม่มีประวัติการทำกิจกรรม
+
+                                </td>
+
+                            </tr>
+
+                        ) : (
+
+                            student.activityLogs.map((log: any) => (
+
+                                <tr
+                                    key={log.id}
+                                    className="border-b"
+                                >
+
+                                    <td className="p-4">
+
+                                        {new Date(
+                                            log.createdAt
+                                        ).toLocaleString(
+                                            "th-TH"
+                                        )}
+
+                                    </td>
+
+                                    <td>
+
+                                        {log.activity.title}
+
+                                    </td>
+
+                                    <td>
+
+                                        {log.activity.duration} นาที
+
+                                    </td>
+
+                                    <td>
+
+                                        {log.completed ? (
+
+                                            <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+
+                                                สำเร็จ
+
+                                            </span>
+
+                                        ) : (
+
+                                            <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
+
+                                                ยังไม่เสร็จ
+
+                                            </span>
+
+                                        )}
+
+                                    </td>
+
+                                </tr>
+
+                            ))
+
+                        )}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {/* ST-5 Answers */}
+
+            {latest?.assessment && (
+
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
+
+                    <h2 className="mb-6 text-2xl font-bold">
+
+                        คะแนนแบบประเมิน ST-5 ล่าสุด
+
+                    </h2>
+
+                    <div className="grid gap-4 md:grid-cols-5">
+
+                        {latest.assessment.answers.map(
+                            (answer: any) => (
+
+                                <div
+                                    key={answer.id}
+                                    className="rounded-xl border p-5 text-center"
+                                >
+
+                                    <p className="text-[var(--content-muted)]">
+
+                                        ข้อ {answer.questionNo}
+
+                                    </p>
+
+                                    <h3 className="mt-3 text-4xl font-bold text-green-700">
+
+                                        {answer.score}
+
+                                    </h3>
+
+                                </div>
+
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+            )}
 
         </main>
 

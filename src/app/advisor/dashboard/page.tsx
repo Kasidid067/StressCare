@@ -24,13 +24,13 @@ function Card({
     color: string;
 }) {
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
             <div className="flex items-center justify-between">
 
                 <div>
 
-                    <p className="text-gray-500">
+                    <p className="text-[var(--content-muted)]">
                         {title}
                     </p>
 
@@ -86,13 +86,13 @@ export default function AdvisorDashboard() {
 
             <div>
 
-                <h1 className="text-4xl font-bold text-green-700">
+                <h1 className="text-4xl font-bold text-[var(--accent-strong)]">
 
                     Dashboard อาจารย์ที่ปรึกษา
 
                 </h1>
 
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-[var(--content-muted)]">
 
                     ภาพรวมของนักศึกษาในความดูแล
 
@@ -146,7 +146,7 @@ export default function AdvisorDashboard() {
 
             </div>
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 text-2xl font-bold">
 
@@ -156,7 +156,7 @@ export default function AdvisorDashboard() {
 
                 <div className="grid gap-6 md:grid-cols-3">
 
-                    <div className="rounded-xl bg-green-50 p-6">
+                    <div className="theme-card-soft rounded-xl p-6">
 
                         <h3 className="font-semibold">
 
@@ -164,7 +164,7 @@ export default function AdvisorDashboard() {
 
                         </h3>
 
-                        <p className="mt-3 text-5xl font-bold text-green-700">
+                        <p className="mt-3 text-5xl font-bold text-[var(--status-low-text)]">
 
                             {data.low}
 
@@ -172,7 +172,7 @@ export default function AdvisorDashboard() {
 
                     </div>
 
-                    <div className="rounded-xl bg-yellow-50 p-6">
+                    <div className="theme-card-soft rounded-xl p-6">
 
                         <h3 className="font-semibold">
 
@@ -180,7 +180,7 @@ export default function AdvisorDashboard() {
 
                         </h3>
 
-                        <p className="mt-3 text-5xl font-bold text-yellow-600">
+                        <p className="mt-3 text-5xl font-bold text-[var(--status-medium-text)]">
 
                             {data.medium}
 
@@ -188,7 +188,7 @@ export default function AdvisorDashboard() {
 
                     </div>
 
-                    <div className="rounded-xl bg-red-50 p-6">
+                    <div className="theme-card-soft rounded-xl p-6">
 
                         <h3 className="font-semibold">
 
@@ -196,7 +196,7 @@ export default function AdvisorDashboard() {
 
                         </h3>
 
-                        <p className="mt-3 text-5xl font-bold text-red-600">
+                        <p className="mt-3 text-5xl font-bold text-[var(--status-high-text)]">
 
                             {data.high}
 

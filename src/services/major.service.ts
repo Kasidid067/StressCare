@@ -11,7 +11,6 @@ export async function getMajors(): Promise<Major[]> {
 export async function createMajor(
     data: {
         name: string;
-        code: string;
     }
 ): Promise<Major> {
     const res = await fetch("/api/admin/majors", {
@@ -31,7 +30,6 @@ export async function updateMajor(
     id: number,
     data: {
         name: string;
-        code: string;
     }
 ): Promise<Major> {
     const res = await fetch(`/api/admin/majors/${id}`, {

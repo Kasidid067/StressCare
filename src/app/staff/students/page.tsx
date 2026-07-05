@@ -1,442 +1,143 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { useParams } from "next/navigation";
 
-import {
-    useStaffStudents,
-} from "@/hooks/useStaffStudents";
+import { useStaffStudent } from "@/hooks/useStaffStudent";
 
-export default function StaffStudentsPage() {
+export default function StaffStudentDetailPage() {
+
+    const params = useParams();
+
+    const id = Number(params.id);
 
     const {
-        students,
+        student,
         loading,
-    } = useStaffStudents();
-
-    const [
-        keyword,
-        setKeyword,
-    ] = useState("");
-
-    const [
-        major,
-        setMajor,
-    ] = useState("");
-
-    const [
-        year,
-        setYear,
-    ] = useState("");
-
-    const filtered =
-        useMemo(() => {
-
-            return students.filter(
-                (student: any) => {
-
-                    const matchKeyword =
-                        student.fullname
-                            .toLowerCase()
-                            .includes(
-                                keyword.toLowerCase()
-                            )
-
-                        ||
-
-                        student.studentId
-                            .toLowerCase()
-                            .includes(
-                                keyword.toLowerCase()
-                            );
-
-                    const matchMajor =
-                        major === ""
-
-                        ||
-
-                        student.major.name === major;
-
-                    const matchYear =
-                        year === ""
-
-                        ||
-
-                        String(student.year) === year;
-
-                    return (
-                        matchKeyword &&
-                        matchMajor &&
-                        matchYear
-                    );
-
-                }
-
-            );
-
-        }, [
-            students,
-            keyword,
-            major,
-            year,
-        ]);
+    } = useStaffStudent(id);
 
     if (loading) {
 
         return (
-            <main className="p-8">
+            <div className="p-8">
                 กำลังโหลด...
-            </main>
+            </div>
         );
 
     }
 
-    const majors = [
-        ...new Set(
-            students.map(
-                (s: any) =>
-                    s.major.name
-            )
-        ),
-    ];
+    if (!student) {
+
+        return (
+            <div className="p-8">
+                ไม่พบข้อมูล
+            </div>
+        );
+
+    }
 
     return (
 
-        <main className="space-y-8 p-8">
+        <main className="mx-auto max-w-6xl p-8 space-y-6">
 
-            <div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                <h1 className="text-4xl font-bold text-green-700">
-
-                    นักศึกษาทั้งหมด
-
+                <h1 className="text-3xl font-bold text-green-700">
+                    {student.fullname}
                 </h1>
+
+                <div className="mt-4 space-y-2">
+
+                    <p>รหัสนักศึกษา : {student.studentId}</p>
+
+                    <p>Email : {student.email}</p>
+
+                    <p>เบอร์โทร : {student.phone ?? "-"}</p>
+
+                    <p>สาขา : {student.major.name}</p>
+
+                    <p>ชั้นปี : {student.year}</p>
+
+                    <p>
+                        อาจารย์ที่ปรึกษา :
+                        {" "}
+                        {student.advisor?.fullname ?? "-"}
+                    </p>
+
+                </div>
 
             </div>
 
-            <div className="rounded-2xl bg-white p-6 shadow">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                <div className="mb-6 grid gap-4 md:grid-cols-3">
+                <h2 className="mb-4 text-2xl font-bold">
+                    ชีพจรล่าสุด
+                </h2>
 
-                    <div className="relative">
+                <p className="text-4xl font-bold text-red-500">
+                    {student.pulses[0]?.bpm ?? "-"} BPM
+                </p>
 
-                        <Search
-                            className="absolute left-4 top-4 text-gray-400"
-                            size={18}
-                        />
+                <p>
+                    SpO₂ :
+                    {" "}
+                    {student.pulses[0]?.spo2 ?? "-"} %
+                </p>
 
-                        <input
-                            value={keyword}
-                            onChange={(e) =>
-                                setKeyword(
-                                    e.target.value
-                                )
-                            }
-                            placeholder="ค้นหา"
-                            className="w-full rounded-xl border py-3 pl-11"
-                        />
+            </div>
 
-                    </div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    <select
-                        value={major}
-                        onChange={(e) =>
-                            setMajor(
-                                e.target.value
-                            )
-                        }
-                        className="rounded-xl border p-3"
-                    >
+                <h2 className="mb-4 text-2xl font-bold">
+                    ประวัติผล ST-5
+                </h2>
 
-                        <option value="">
-                            ทุกสาขา
-                        </option>
+                <div className="space-y-4">
 
-                        {majors.map(
-                            (m) => (
+                    {student.results.map((result) => (
 
-                                <option
-                                    key={m}
-                                    value={m}
-                                >
+                        <div
+                            key={result.id}
+                            className="rounded-lg border p-4"
+                        >
 
-                                    {m}
+                            <div className="flex justify-between">
 
-                                </option>
+                                <div>
 
-                            )
-                        )}
+                                    คะแนน :
+                                    {" "}
+                                    {result.stressScore}
 
-                    </select>
+                                </div>
 
-                    <select
-                        value={year}
-                        onChange={(e) =>
-                            setYear(
-                                e.target.value
-                            )
-                        }
-                        className="rounded-xl border p-3"
-                    >
+                                <div>
 
-                        <option value="">
-                            ทุกชั้นปี
-                        </option>
+                                    {result.stressLevel}
 
-                        {[1,2,3,4].map(
-                            (y) => (
+                                </div>
 
-                                <option
-                                    key={y}
-                                    value={y}
-                                >
+                            </div>
 
-                                    ปี {y}
+                            {result.recommendation && (
 
-                                </option>
+                                <p className="mt-3 text-[var(--content-muted)]">
 
-                            )
-                        )}
+                                    {result.recommendation}
 
-                    </select>
-
-                </div>
-                                <div className="overflow-x-auto">
-
-                    <table className="w-full">
-
-                        <thead className="bg-green-600 text-white">
-
-                            <tr>
-
-                                <th className="p-4 text-left">
-
-                                    รหัสนักศึกษา
-
-                                </th>
-
-                                <th>
-
-                                    ชื่อ
-
-                                </th>
-
-                                <th>
-
-                                    สาขา
-
-                                </th>
-
-                                <th>
-
-                                    ชั้นปี
-
-                                </th>
-
-                                <th>
-
-                                    อาจารย์ที่ปรึกษา
-
-                                </th>
-
-                                <th>
-
-                                    คะแนนล่าสุด
-
-                                </th>
-
-                                <th>
-
-                                    ระดับ
-
-                                </th>
-
-                                <th>
-
-                                    BPM
-
-                                </th>
-
-                                <th>
-
-                                    SpO₂
-
-                                </th>
-
-                                <th>
-
-                                    รายละเอียด
-
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {filtered.length === 0 ? (
-
-                                <tr>
-
-                                    <td
-                                        colSpan={10}
-                                        className="p-8 text-center text-gray-500"
-                                    >
-
-                                        ไม่พบข้อมูลนักศึกษา
-
-                                    </td>
-
-                                </tr>
-
-                            ) : (
-
-                                filtered.map(
-                                    (
-                                        student: any
-                                    ) => {
-
-                                        const result =
-                                            student.results?.[0];
-
-                                        return (
-
-                                            <tr
-                                                key={
-                                                    student.id
-                                                }
-                                                className="border-b hover:bg-gray-50"
-                                            >
-
-                                                <td className="p-4">
-
-                                                    {student.studentId}
-
-                                                </td>
-
-                                                <td>
-
-                                                    {student.fullname}
-
-                                                </td>
-
-                                                <td>
-
-                                                    {student.major.name}
-
-                                                </td>
-
-                                                <td className="text-center">
-
-                                                    ปี {student.year}
-
-                                                </td>
-
-                                                <td>
-
-                                                    {student.advisor
-                                                        ?.fullname ??
-                                                        "-"}
-
-                                                </td>
-
-                                                <td className="text-center font-bold">
-
-                                                    {result?.stressScore ??
-                                                        "-"}
-
-                                                </td>
-
-                                                <td className="text-center">
-
-                                                    {result
-                                                        ?.stressLevel ===
-                                                    "LOW" ? (
-
-                                                        <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
-
-                                                            ต่ำ
-
-                                                        </span>
-
-                                                    ) : result
-                                                          ?.stressLevel ===
-                                                      "MEDIUM" ? (
-
-                                                        <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
-
-                                                            ปานกลาง
-
-                                                        </span>
-
-                                                    ) : result
-                                                          ?.stressLevel ===
-                                                      "HIGH" ? (
-
-                                                        <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700">
-
-                                                            สูง
-
-                                                        </span>
-
-                                                    ) : (
-
-                                                        "-"
-
-                                                    )}
-
-                                                </td>
-
-                                                <td className="text-center">
-
-                                                    {result
-                                                        ?.pulse
-                                                        ?.bpm ??
-                                                        "-"}
-
-                                                </td>
-
-                                                <td className="text-center">
-
-                                                    {result
-                                                        ?.pulse
-                                                        ?.spo2 ??
-                                                        "-"}
-
-                                                </td>
-
-                                                <td className="text-center">
-
-                                                    <button
-
-                                                        className="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-
-                                                    >
-
-                                                        ดูรายละเอียด
-
-                                                    </button>
-
-                                                </td>
-
-                                            </tr>
-
-                                        );
-
-                                    }
-
-                                )
+                                </p>
 
                             )}
 
-                        </tbody>
-                    </table>
+                        </div>
+
+                    ))}
+
                 </div>
-                <div className="mt-6 text-right text-sm text-gray-500">
-                    ทั้งหมด {filtered.length} รายการ
-                </div>
+
             </div>
+
         </main>
+
     );
+
 }

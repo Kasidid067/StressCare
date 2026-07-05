@@ -39,7 +39,7 @@ export default function StaffStudentDetailPage() {
 
         <main className="mx-auto max-w-6xl p-8 space-y-6">
 
-            <div className="rounded-xl bg-white p-6 shadow">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h1 className="text-3xl font-bold text-green-700">
                     {student.fullname}
@@ -67,7 +67,7 @@ export default function StaffStudentDetailPage() {
 
             </div>
 
-            <div className="rounded-xl bg-white p-6 shadow">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-4 text-2xl font-bold">
                     ชีพจรล่าสุด
@@ -85,7 +85,7 @@ export default function StaffStudentDetailPage() {
 
             </div>
 
-            <div className="rounded-xl bg-white p-6 shadow">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-4 text-2xl font-bold">
                     ประวัติผล ST-5
@@ -120,7 +120,7 @@ export default function StaffStudentDetailPage() {
 
                             {result.recommendation && (
 
-                                <p className="mt-3 text-gray-600">
+                                <p className="mt-3 text-[var(--content-muted)]">
 
                                     {result.recommendation}
 

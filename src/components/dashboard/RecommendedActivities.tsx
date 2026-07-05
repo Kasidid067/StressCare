@@ -22,19 +22,19 @@ export default function RecommendedActivities({
                 {activities.map(activity => (
                     <div
                         key={activity.id}
-                        className="rounded-xl border p-4"
+                        className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-4"
                     >
 
-                        <h3 className="font-semibold">
+                        <h3 className="font-semibold text-[var(--content-text)]">
 
                             {activity.title}
                         </h3>
-                        <p className="mt-1 text-sm text-gray-500">
+                        <p className="mt-1 text-sm text-[var(--content-muted)]">
                             {activity.description}
                         </p>
 
                         <div
-                            className="mt-2 flex justify-between text-sm"
+                            className="mt-2 flex justify-between text-sm text-[var(--content-muted)]"
                         >
 
                             <span>

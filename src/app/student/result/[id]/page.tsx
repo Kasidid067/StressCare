@@ -26,7 +26,7 @@ export default function ResultPage({
             <main className="flex min-h-[80vh] items-center justify-center">
                 <div className="text-center">
                     <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-green-600 border-t-transparent"></div>
-                    <p className="text-lg font-medium text-gray-600">
+                    <p className="text-lg font-medium text-[var(--content-muted)]">
                         กำลังโหลดผลการประเมิน...
                     </p>
                 </div>
@@ -37,7 +37,7 @@ export default function ResultPage({
     if (!data) {
         return (
             <main className="flex min-h-[80vh] items-center justify-center">
-                <div className="rounded-2xl bg-white p-10 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 shadow" style={{ boxShadow: "var(--shadow)" }}>
                     <h1 className="text-2xl font-bold text-red-600">
                         ไม่พบข้อมูล
                     </h1>
@@ -59,23 +59,23 @@ export default function ResultPage({
         LOW: {
             emoji: "😊",
             title: "ระดับต่ำ",
-            bg: "bg-green-50",
-            border: "border-green-500",
-            text: "text-green-600",
+            bg: "bg-emerald-500/10",
+            border: "border-emerald-500",
+            text: "text-emerald-600 dark:text-emerald-400",
         },
         MEDIUM: {
             emoji: "😐",
             title: "ระดับปานกลาง",
-            bg: "bg-yellow-50",
-            border: "border-yellow-500",
-            text: "text-yellow-600",
+            bg: "bg-amber-500/10",
+            border: "border-amber-500",
+            text: "text-amber-600 dark:text-amber-400",
         },
         HIGH: {
             emoji: "😟",
             title: "ระดับสูง",
-            bg: "bg-red-50",
-            border: "border-red-500",
-            text: "text-red-600",
+            bg: "bg-rose-500/10",
+            border: "border-rose-500",
+            text: "text-rose-600 dark:text-rose-400",
         },
     }[result.stressLevel];
 
@@ -96,7 +96,7 @@ export default function ResultPage({
                             ผลการประเมินความเครียด
                         </h1>
 
-                        <p className="mt-2 text-gray-500">
+                        <p className="mt-2 text-[var(--content-muted)]">
                             {new Date(
                                 result.createdAt
                             ).toLocaleDateString(
@@ -114,7 +114,7 @@ export default function ResultPage({
 
             <div className="grid gap-6 lg:grid-cols-2">
 
-                <div className="rounded-2xl bg-white p-8 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                     <h2 className="mb-6 text-xl font-bold">
                         คะแนนรวม
@@ -132,13 +132,13 @@ export default function ResultPage({
 
                 </div>
 
-                <div className="rounded-2xl bg-white p-8 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                     <h2 className="mb-6 text-xl font-bold">
                         คำแนะนำ
                     </h2>
 
-                    <p className="leading-8 text-gray-700">
+                    <p className="leading-8 text-[var(--content-text)]">
                         {result.recommendation ??
                             "ไม่มีคำแนะนำ"}
                     </p>
@@ -149,7 +149,7 @@ export default function ResultPage({
 
             {result.aiSummary && (
 
-                <div className="rounded-2xl bg-blue-50 p-8 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                     <h2 className="mb-5 text-xl font-bold">
                         🤖 AI Summary
@@ -163,7 +163,7 @@ export default function ResultPage({
 
             )}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 text-2xl font-bold">
                     กิจกรรมที่แนะนำ
@@ -171,7 +171,7 @@ export default function ResultPage({
 
                 {activities.length === 0 ? (
 
-                    <div className="rounded-xl border border-dashed p-10 text-center text-gray-500">
+                    <div className="rounded-xl border border-dashed border-[var(--border)] p-10 text-center text-[var(--content-muted)]">
                         ไม่มีกิจกรรมแนะนำ
                     </div>
 
@@ -190,7 +190,7 @@ export default function ResultPage({
                                     {activity.title}
                                 </h3>
 
-                                <p className="mt-3 text-gray-600">
+                                <p className="mt-3 text-[var(--content-muted)]">
                                     {activity.description}
                                 </p>
 
@@ -200,7 +200,7 @@ export default function ResultPage({
                                         {activity.duration} นาที
                                     </span>
 
-                                    <span className="text-sm text-gray-400">
+                                    <span className="text-sm text-[var(--content-muted)]">
                                         {activity.category}
                                     </span>
 

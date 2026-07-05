@@ -1,60 +1,30 @@
-import { auth } from "@/auth";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
-export default auth((req) => {
-  const user = req.auth?.user;
+export function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname;
+  const sessionCookie =
+    req.cookies.get("authjs.session-token") ||
+    req.cookies.get("__Secure-authjs.session-token");
 
-  // ยังไม่ Login
-  if (!user) {
-    return NextResponse.redirect(
-      new URL("/auth/login", req.url)
-    );
+  if (!sessionCookie && pathname.startsWith("/student")) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Admin
-  if (
-    pathname.startsWith("/admin") &&
-    user.role !== "ADMIN"
-  ) {
-    return NextResponse.redirect(
-      new URL("/", req.url)
-    );
+  if (!sessionCookie && pathname.startsWith("/advisor")) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Staff
-  if (
-    pathname.startsWith("/staff") &&
-    user.role !== "STAFF"
-  ) {
-    return NextResponse.redirect(
-      new URL("/", req.url)
-    );
+  if (!sessionCookie && pathname.startsWith("/staff")) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Advisor
-  if (
-    pathname.startsWith("/advisor") &&
-    user.role !== "ADVISOR"
-  ) {
-    return NextResponse.redirect(
-      new URL("/", req.url)
-    );
-  }
-
-  // Student
-  if (
-    pathname.startsWith("/student") &&
-    user.role !== "STUDENT"
-  ) {
-    return NextResponse.redirect(
-      new URL("/", req.url)
-    );
+  if (!sessionCookie && pathname.startsWith("/admin")) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
   matcher: [

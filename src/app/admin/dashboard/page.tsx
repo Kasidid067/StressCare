@@ -28,7 +28,7 @@ export default function AdminDashboardPage() {
 
   if (loading || !dashboard) {
     return (
-      <div className="p-8">
+      <div className="flex h-[70vh] items-center justify-center text-[var(--content-muted)]">
         กำลังโหลด...
       </div>
     );

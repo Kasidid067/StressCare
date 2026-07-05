@@ -1,50 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "sonner";
-import AuthProvider from "@/components/providers/AuthProvider";
+import type { ReactNode } from "react";
 
-import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Sidebar from "@/components/layout/admin/Sidebar";
+import ThemeProvider from "@/components/providers/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "StressCare",
-  description: "Stress Assessment System",
-};
-
-export default function RootLayout({
+export default function AdminLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: ReactNode;
+}) {
   return (
-    <html
-      lang="th"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
-      <body className="min-h-screen bg-gray-100 antialiased">
+    <ThemeProvider>
+      <div className="flex min-h-screen bg-[var(--background)]">
+        <Sidebar />
 
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <div className="flex flex-1 flex-col">
+          <Navbar
+            name="ผู้ใช้งาน"
+            role="ADMIN"
+          />
 
-        <Toaster
-          position="top-right"
-          richColors
-          expand={true}
-          closeButton
-          duration={3000}
-        />
-
-      </body>
-    </html>
+          <main className="flex-1 bg-[radial-gradient(circle_at_top_left,_rgba(20,184,166,0.12),_transparent_35%),linear-gradient(135deg,_rgba(255,255,255,0.45),_rgba(248,250,252,0.9))] p-6 dark:bg-[radial-gradient(circle_at_top_left,_rgba(45,212,191,0.14),_transparent_35%),linear-gradient(135deg,_rgba(15,23,42,0.8),_rgba(15,23,42,1))]">
+            <div className="mx-auto max-w-7xl">
+              {children}
+            </div>
+          </main>
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }

@@ -18,12 +18,12 @@ export default function DeleteActivityDialog({
     if (!open || !activity) return null;
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <div className="theme-card w-full max-w-md rounded-2xl p-6">
                 <h2 className="text-2xl font-bold text-red-600">
                     ลบกิจกรรม
                 </h2>
 
-                <p className="mt-4 text-gray-600">
+                <p className="mt-4 text-[var(--content-muted)]">
                     ต้องการลบกิจกรรม
                 </p>
 

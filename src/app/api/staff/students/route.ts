@@ -1,62 +1,81 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { Role } from "@prisma/client";
 
-export async function GET() {
-    try {
-        const session = await auth();
-        if (
-            !session?.user ||
-            session.user.role !== Role.STAFF
-        ) {
-            return NextResponse.json(
-                {
-                    message: "Forbidden",
-                },
-                {
-                    status: 403,
-                }
-            );
-        }
+export async function GET(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    const session = await auth();
 
-        const students =
-            await prisma.user.findMany({
-                where: {
-                    role: Role.STUDENT,
-                },
-                include: {
-                    major: true,
-                    advisor: {
-                        select: {
-                            id: true,
-                            fullname: true,
-                        },
-                    },
-                    results: {
-                        take: 1,
-                        orderBy: {
-                            createdAt: "desc",
-                        },
-                        include: {
-                            pulse: true,
-                        },
-                    },
-                },
-                orderBy: {
-                    fullname: "asc",
-                },
-            });
-        return NextResponse.json(students);
-    } catch (error) {
-        console.error(error);
+    if (
+        !session?.user ||
+        session.user.role !== "STAFF"
+    ) {
         return NextResponse.json(
-            {
-                message: "Internal Server Error",
-            },
-            {
-                status: 500,
-            }
+            { message: "Forbidden" },
+            { status: 403 }
         );
     }
+
+    const { id } = await params;
+
+    const student = await prisma.user.findUnique({
+
+        where: {
+            id: Number(id),
+        },
+
+        include: {
+
+            major: true,
+
+            advisor: {
+                select: {
+                    id: true,
+                    fullname: true,
+                },
+            },
+
+            pulses: {
+
+                take: 1,
+
+                orderBy: {
+                    recordedAt: "desc",
+                },
+
+            },
+
+            results: {
+
+                orderBy: {
+                    createdAt: "desc",
+                },
+
+            },
+
+            assessments: {
+
+                orderBy: {
+                    createdAt: "desc",
+                },
+
+            },
+
+        },
+
+    });
+
+    if (!student) {
+
+        return NextResponse.json(
+            { message: "ไม่พบนักศึกษา" },
+            { status: 404 }
+        );
+
+    }
+
+    return NextResponse.json(student);
+
 }

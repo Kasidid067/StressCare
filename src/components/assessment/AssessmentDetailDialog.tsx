@@ -31,7 +31,7 @@ export default function AssessmentDetailDialog({
 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
 
-            <div className="max-h-[90vh] w-full max-w-3xl overflow-auto rounded-2xl bg-white p-8">
+            <div className="theme-card max-h-[90vh] w-full max-w-3xl overflow-auto rounded-2xl p-8">
 
                 <div className="mb-8 flex items-center justify-between">
 
@@ -59,7 +59,7 @@ export default function AssessmentDetailDialog({
 
                     <div className="rounded-xl border p-5">
 
-                        <p className="text-gray-500">
+                        <p className="text-[var(--content-muted)]">
 
                             คะแนนรวม
 
@@ -75,7 +75,7 @@ export default function AssessmentDetailDialog({
 
                     <div className="rounded-xl border p-5">
 
-                        <p className="text-gray-500">
+                        <p className="text-[var(--content-muted)]">
 
                             ระดับความเครียด
 

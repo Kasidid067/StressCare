@@ -14,21 +14,21 @@ export default function HistoryTable({
         switch (level) {
 
             case "LOW":
-                return "bg-green-100 text-green-700";
+                return "status-low";
 
             case "MEDIUM":
-                return "bg-yellow-100 text-yellow-700";
+                return "status-medium";
 
             case "HIGH":
-                return "bg-red-100 text-red-700";
+                return "status-high";
 
             default:
-                return "bg-gray-100";
+                return "bg-[var(--surface-muted)] text-[var(--content-muted)] border border-[var(--border)]";
         }
     }
 
     return (
-        <div className="rounded-2xl bg-white shadow">
+        <div className="theme-card rounded-2xl">
             <table className="w-full">
                 <thead className="border-b">
                     <tr>
@@ -82,7 +82,7 @@ export default function HistoryTable({
                                 <td className="text-center">
                                     <Link
                                         href={`/student/result/${item.id}`}
-                                        className="text-green-600"
+                                        className="text-[var(--accent-strong)]"
                                     >
                                         ดูผล
                                     </Link>

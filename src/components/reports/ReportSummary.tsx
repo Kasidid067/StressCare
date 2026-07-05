@@ -9,8 +9,8 @@ export default function ReportSummary({
 }: Props) {
     return (
 
-        <div className="rounded-xl bg-white p-6 shadow">
-            <p className="text-gray-500">
+        <div className="theme-card rounded-xl p-6">
+            <p className="text-[var(--content-muted)]">
                 {title}
             </p>
 

@@ -86,7 +86,7 @@ export default function EditUserPage() {
 
             <form
                 onSubmit={handleSubmit}
-                className="space-y-5 rounded-xl bg-white p-8 shadow"
+                className="space-y-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}
             >
 
                 <input

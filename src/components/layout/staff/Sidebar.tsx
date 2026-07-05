@@ -2,22 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LayoutDashboard, GraduationCap, FileText } from "lucide-react";
 
 const menus = [
   {
     title: "Dashboard",
     href: "/staff/dashboard",
-    icon: "📊",
+    icon: LayoutDashboard,
   },
   {
     title: "นักศึกษา",
     href: "/staff/students",
-    icon: "👨‍🎓",
+    icon: GraduationCap,
   },
   {
     title: "รายงาน",
     href: "/staff/reports",
-    icon: "📄",
+    icon: FileText,
   },
 ];
 
@@ -25,47 +26,32 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-64 flex-col bg-orange-600 text-white">
-
-      <div className="border-b border-orange-500 p-6">
-
-        <h1 className="text-3xl font-bold">
-          StressCare
-        </h1>
-
-        <p className="mt-2 text-orange-100">
-          Staff
-        </p>
-
+    <aside className="flex h-screen w-72 flex-col border-r border-[var(--border)] bg-[var(--surface)] p-4">
+      <div className="rounded-3xl bg-gradient-to-br from-orange-500 to-amber-500 p-5 text-white shadow-lg">
+        <h1 className="text-2xl font-bold">StressCare</h1>
+        <p className="mt-1 text-sm text-white/80">Staff Portal</p>
       </div>
 
-      <nav className="flex-1 space-y-2 p-4">
-
-        {menus.map((menu) => (
-
-          <Link
-            key={menu.href}
-            href={menu.href}
-            className={`flex items-center gap-3 rounded-xl px-4 py-3 transition
-
-            ${
-              pathname.startsWith(menu.href)
-                ? "bg-white font-semibold text-orange-700"
-                : "hover:bg-orange-500"
-            }
-            `}
-          >
-
-            <span>{menu.icon}</span>
-
-            {menu.title}
-
-          </Link>
-
-        ))}
-
+      <nav className="mt-4 flex-1 space-y-2">
+        {menus.map((menu) => {
+          const active = pathname.startsWith(menu.href);
+          const Icon = menu.icon;
+          return (
+            <Link
+              key={menu.href}
+              href={menu.href}
+              className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                active
+                  ? "bg-orange-500 text-white shadow"
+                  : "text-[var(--foreground)] hover:bg-[var(--surface-muted)]"
+              }`}
+            >
+              <Icon size={20} />
+              {menu.title}
+            </Link>
+          );
+        })}
       </nav>
-
     </aside>
   );
 }

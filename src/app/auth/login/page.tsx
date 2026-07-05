@@ -5,7 +5,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, HeartPulse, Lock, User } from "lucide-react";
 
 
 export default function LoginPage() {
@@ -72,41 +72,50 @@ export default function LoginPage() {
     }
 
     return (
-        <main className="min-h-screen bg-green-50 flex items-center justify-center px-4">
-            <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+        <main className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(20,184,166,0.12),_transparent_35%),linear-gradient(135deg,_rgba(255,255,255,0.45),_rgba(248,250,252,0.9))] px-4 py-10 dark:bg-[radial-gradient(circle_at_top_left,_rgba(45,212,191,0.14),_transparent_35%),linear-gradient(135deg,_rgba(15,23,42,0.8),_rgba(15,23,42,1))]">
+            <div className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8" style={{ boxShadow: "var(--shadow)" }}>
 
-                <h1 className="text-center text-4xl font-bold text-green-700">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-blue-500 shadow-lg">
+                    <HeartPulse className="h-8 w-8 text-white" />
+                </div>
+
+                <h1 className="mt-4 text-center text-3xl font-bold text-[var(--accent-strong)]">
                     StressCare
                 </h1>
 
-                <p className="mt-2 text-center text-gray-500">
+                <p className="mt-2 text-center text-[var(--content-muted)]">
                     เข้าสู่ระบบ
                 </p>
 
                 <form onSubmit={handleLogin} className="mt-8 space-y-4">
 
-                    <input
-                        type="text"
-                        placeholder="รหัสนิสิต"
-                        value={studentId}
-                        onChange={(e) => setStudentId(e.target.value)}
-                        className="w-full rounded-xl border border-gray-300 p-3 focus:border-green-500 focus:outline-none"
-                    />
+                    <div className="relative">
+                        <User className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--content-muted)]" />
+
+                        <input
+                            type="text"
+                            placeholder="รหัสนิสิต"
+                            value={studentId}
+                            onChange={(e) => setStudentId(e.target.value)}
+                            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 pl-11 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
+                        />
+                    </div>
 
                     <div className="relative">
+                        <Lock className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--content-muted)]" />
 
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder="รหัสผ่าน"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full rounded-xl border border-gray-300 bg-white p-3 pr-12 text-gray-900 placeholder:text-gray-400 focus:border-green-500 focus:outline-none"
+                            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3 pl-11 pr-12 text-[var(--content-text)] placeholder:text-[var(--content-muted)] focus:border-[var(--accent)] focus:outline-none"
                         />
 
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-green-600"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--content-muted)] hover:text-[var(--accent)]"
                         >
                             {showPassword ? (
                                 <EyeOff size={20} />
@@ -120,19 +129,19 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full rounded-xl bg-green-600 py-3 font-semibold text-white hover:bg-green-700 disabled:bg-gray-400"
+                        className="w-full rounded-xl bg-[var(--accent)] py-3 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
                     </button>
 
                 </form>
 
-                <p className="mt-6 text-center text-sm text-gray-600">
+                <p className="mt-6 text-center text-sm text-[var(--content-muted)]">
                     ยังไม่มีบัญชี ?
 
                     <Link
                         href="/auth/register"
-                        className="ml-2 font-semibold text-green-700 hover:underline"
+                        className="ml-2 font-semibold text-[var(--accent-strong)] hover:underline"
                     >
                         สมัครสมาชิก
                     </Link>

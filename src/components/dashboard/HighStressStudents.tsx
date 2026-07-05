@@ -21,25 +21,25 @@ export default function HighStressStudents({
                 {students.map(student => (
                     <div
                         key={student.id}
-                        className="rounded-xl border p-4"
+                        className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-4"
                     >
 
-                        <h3 className="font-semibold">
+                        <h3 className="font-semibold text-[var(--content-text)]">
                             {student.user.studentId}
                         </h3>
 
-                        <p>
+                        <p className="text-[var(--content-muted)]">
                             {student.user.fullname}
                         </p>
 
                         <div className="mt-2 flex justify-between">
-                            <span>
+                            <span className="text-[var(--content-text)]">
                                 คะแนน
                                 {" "}
                                 {student.stressScore}
                             </span>
                             <span
-                                className="rounded-full bg-red-500 px-3 py-1 text-white"
+                                className="status-high rounded-full px-3 py-1 text-sm font-medium"
                             >
                                 HIGH
                             </span>

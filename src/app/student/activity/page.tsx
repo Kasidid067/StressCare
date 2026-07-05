@@ -71,19 +71,19 @@ export default function ActivityPage() {
         <h1 className="text-3xl font-bold text-green-700">
           กิจกรรมแนะนำ
         </h1>
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-[var(--content-muted)]">
           เลือกทำกิจกรรมเพื่อลดระดับความเครียด
         </p>
       </div>
       {activities.length === 0 && (
-        <div className="rounded-xl bg-white p-10 text-center shadow">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-10 text-center shadow" style={{ boxShadow: "var(--shadow)" }}>
           <div className="text-6xl">
             📋
           </div>
           <h2 className="mt-4 text-2xl font-bold">
             ยังไม่มีกิจกรรม
           </h2>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-[var(--content-muted)]">
             กรุณาติดต่อผู้ดูแลระบบ
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function ActivityPage() {
           return (
             <div
               key={activity.id}
-              className="rounded-2xl bg-white p-6 shadow"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold">
@@ -107,7 +107,7 @@ export default function ActivityPage() {
                   {activity.stressLevel}
                 </span>
               </div>
-              <p className="mt-4 text-gray-600">
+              <p className="mt-4 text-[var(--content-muted)]">
                 {activity.description}
               </p>
               <div className="mt-4">

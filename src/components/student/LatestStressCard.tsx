@@ -16,7 +16,7 @@ export default function LatestStressCard({
 }: Props) {
     if (!latest) {
         return (
-            <div className="rounded-2xl bg-white p-6 shadow">
+            <div className="theme-card rounded-2xl p-6">
                 <h2 className="mb-5 text-xl font-bold">
                     คะแนนล่าสุด
                 </h2>
@@ -25,7 +25,7 @@ export default function LatestStressCard({
                         <div className="mb-3 text-6xl">
                             📝
                         </div>
-                        <p className="text-gray-500">
+                        <p className="text-[var(--content-muted)]">
                             ยังไม่เคยทำแบบประเมิน
                         </p>
                     </div>
@@ -40,7 +40,7 @@ export default function LatestStressCard({
     ];
 
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-xl font-bold">
                     คะแนนล่าสุด
@@ -68,7 +68,7 @@ export default function LatestStressCard({
 
             <div className="mt-6 border-t pt-4">
                 <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">
+                    <span className="text-[var(--content-muted)]">
                         วันที่ประเมิน
                     </span>
 

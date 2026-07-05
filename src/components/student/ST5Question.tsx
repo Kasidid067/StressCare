@@ -14,7 +14,7 @@ export default function ST5Question({
 
     return (
 
-        <div className="rounded-xl bg-white p-6 shadow">
+        <div className="theme-card rounded-xl p-6">
             <h2 className="mb-3 text-xl font-bold">
                 ข้อ {no}
             </h2>
@@ -46,7 +46,7 @@ export default function ST5Question({
                 ))}
             </div>
 
-            <div className="mt-4 grid grid-cols-4 text-center text-sm text-gray-500">
+            <div className="mt-4 grid grid-cols-4 text-center text-sm text-[var(--content-muted)]">
                 <span>0<br />ไม่เลย</span>
                 <span>1<br />บางครั้ง</span>
                 <span>2<br />บ่อย</span>

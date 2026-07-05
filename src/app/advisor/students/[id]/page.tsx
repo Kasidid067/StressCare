@@ -64,15 +64,15 @@ export default function AdvisorStudentDetailPage() {
 
             {/* Header */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <div className="flex items-center gap-6">
 
-                    <div className="rounded-full bg-green-100 p-6">
+                    <div className="rounded-full bg-[var(--surface-muted)] p-6">
 
                         <User
                             size={45}
-                            className="text-green-700"
+                            className="text-[var(--accent-strong)]"
                         />
 
                     </div>
@@ -85,13 +85,13 @@ export default function AdvisorStudentDetailPage() {
 
                         </h1>
 
-                        <p className="mt-2 text-gray-500">
+                        <p className="mt-2 text-[var(--content-muted)]">
 
                             {student.studentId}
 
                         </p>
 
-                        <p className="text-gray-500">
+                        <p className="text-[var(--content-muted)]">
 
                             {student.major.name}
 
@@ -107,9 +107,9 @@ export default function AdvisorStudentDetailPage() {
 
             <div className="grid gap-6 md:grid-cols-4">
 
-                <div className="rounded-xl bg-white p-6 shadow">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    <p className="text-gray-500">
+                    <p className="text-[var(--content-muted)]">
 
                         คะแนนล่าสุด
 
@@ -128,7 +128,7 @@ export default function AdvisorStudentDetailPage() {
 
                 </div>
 
-                <div className="rounded-xl bg-white p-6 shadow">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                     <div className="flex items-center gap-2">
 
@@ -151,30 +151,41 @@ export default function AdvisorStudentDetailPage() {
 
                 </div>
 
-                <div className="rounded-xl bg-white p-6 shadow">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    <p className="text-gray-500">
+                    <p className="text-[var(--content-muted)]">
 
                         ระดับ
 
                     </p>
 
-                    <h2 className="mt-3 text-3xl font-bold">
+                    <h2 className="mt-3">
 
                         {
-
-                            latest
-                                ?.stressLevel ?? "-"
-
+                            latest?.stressLevel === "HIGH" ? (
+                                <span className="status-high inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    สูง
+                                </span>
+                            ) : latest?.stressLevel === "MEDIUM" ? (
+                                <span className="status-medium inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    ปานกลาง
+                                </span>
+                            ) : latest?.stressLevel === "LOW" ? (
+                                <span className="status-low inline-block rounded-full px-4 py-1 text-lg font-bold">
+                                    ต่ำ
+                                </span>
+                            ) : (
+                                <span className="text-3xl font-bold">-</span>
+                            )
                         }
 
                     </h2>
 
                 </div>
 
-                <div className="rounded-xl bg-white p-6 shadow">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
-                    <p className="text-gray-500">
+                    <p className="text-[var(--content-muted)]">
 
                         SpO₂
 
@@ -197,7 +208,7 @@ export default function AdvisorStudentDetailPage() {
 
             {/* AI */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
 
@@ -224,7 +235,7 @@ export default function AdvisorStudentDetailPage() {
 
             {/* Recommendation */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 text-2xl font-bold">
 
@@ -249,7 +260,7 @@ export default function AdvisorStudentDetailPage() {
 
             {/* ST5 History */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 text-2xl font-bold">
 
@@ -257,117 +268,133 @@ export default function AdvisorStudentDetailPage() {
 
                 </h2>
 
-                <table className="w-full">
+                <div className="overflow-x-auto rounded-xl">
 
-                    <thead>
+                    <table className="w-full">
 
-                        <tr className="border-b">
+                        <thead>
 
-                            <th className="p-4 text-left">
+                            <tr className="border-b border-[var(--border)] bg-[var(--surface-muted)] text-[var(--content-muted)]">
 
-                                วันที่
+                                <th className="p-4 text-left">
 
-                            </th>
+                                    วันที่
 
-                            <th>
+                                </th>
 
-                                คะแนน
+                                <th>
 
-                            </th>
+                                    คะแนน
 
-                            <th>
+                                </th>
 
-                                ระดับ
+                                <th>
 
-                            </th>
+                                    ระดับ
 
-                            <th>
+                                </th>
 
-                                BPM
+                                <th>
 
-                            </th>
+                                    BPM
 
-                        </tr>
+                                </th>
 
-                    </thead>
+                            </tr>
 
-                    <tbody>
+                        </thead>
 
-                        {
+                        <tbody>
 
-                            student.results.map(
-                                (
-                                    item: any
-                                ) => (
+                            {
 
-                                    <tr
-                                        key={
-                                            item.id
-                                        }
-                                        className="border-b"
-                                    >
+                                student.results.map(
+                                    (
+                                        item: any
+                                    ) => (
 
-                                        <td className="p-4">
-
-                                            {
-
-                                                new Date(
-                                                    item.createdAt
-                                                ).toLocaleString(
-                                                    "th-TH"
-                                                )
-
+                                        <tr
+                                            key={
+                                                item.id
                                             }
+                                            className="border-b border-[var(--border)] transition hover:bg-[var(--surface-muted)]"
+                                        >
 
-                                        </td>
+                                            <td className="p-4">
 
-                                        <td>
+                                                {
 
-                                            {
+                                                    new Date(
+                                                        item.createdAt
+                                                    ).toLocaleString(
+                                                        "th-TH"
+                                                    )
 
-                                                item.stressScore
+                                                }
 
-                                            }
+                                            </td>
 
-                                        </td>
+                                            <td className="text-center">
 
-                                        <td>
+                                                {
 
-                                            {
+                                                    item.stressScore
 
-                                                item.stressLevel
+                                                }
 
-                                            }
+                                            </td>
 
-                                        </td>
+                                            <td className="text-center">
 
-                                        <td>
+                                                {
+                                                    item.stressLevel === "HIGH" ? (
+                                                        <span className="status-high rounded-full px-3 py-1 text-sm font-semibold">
+                                                            สูง
+                                                        </span>
+                                                    ) : item.stressLevel === "MEDIUM" ? (
+                                                        <span className="status-medium rounded-full px-3 py-1 text-sm font-semibold">
+                                                            ปานกลาง
+                                                        </span>
+                                                    ) : item.stressLevel === "LOW" ? (
+                                                        <span className="status-low rounded-full px-3 py-1 text-sm font-semibold">
+                                                            ต่ำ
+                                                        </span>
+                                                    ) : (
+                                                        item.stressLevel
+                                                    )
+                                                }
 
-                                            {
+                                            </td>
 
-                                                item.pulse?.bpm ??
-                                                "-"
+                                            <td className="text-center">
 
-                                            }
+                                                {
 
-                                        </td>
+                                                    item.pulse?.bpm ??
+                                                    "-"
 
-                                    </tr>
+                                                }
+
+                                            </td>
+
+                                        </tr>
+
+                                    )
 
                                 )
 
-                            )
+                            }
 
-                        }
+                        </tbody>
 
-                    </tbody>
+                    </table>
 
-                </table>
+                </div>
 
             </div>
                         {/* Pulse History */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
 
@@ -448,7 +475,7 @@ export default function AdvisorStudentDetailPage() {
 
             {/* Activity History */}
 
-            <div className="rounded-2xl bg-white p-8 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
 
@@ -500,7 +527,7 @@ export default function AdvisorStudentDetailPage() {
 
                                 <td
                                     colSpan={4}
-                                    className="p-8 text-center text-gray-500"
+                                    className="p-8 text-center text-[var(--content-muted)]"
                                 >
 
                                     ยังไม่มีประวัติการทำกิจกรรม
@@ -578,7 +605,7 @@ export default function AdvisorStudentDetailPage() {
 
             {latest?.assessment && (
 
-                <div className="rounded-2xl bg-white p-8 shadow">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                     <h2 className="mb-6 text-2xl font-bold">
 
@@ -596,7 +623,7 @@ export default function AdvisorStudentDetailPage() {
                                     className="rounded-xl border p-5 text-center"
                                 >
 
-                                    <p className="text-gray-500">
+                                    <p className="text-[var(--content-muted)]">
 
                                         ข้อ {answer.questionNo}
 

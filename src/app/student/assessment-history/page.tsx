@@ -86,7 +86,7 @@ export default function AssessmentHistoryPage() {
 
                 </h1>
 
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-[var(--content-muted)]">
 
                     ประวัติการประเมินความเครียดทั้งหมด
 
@@ -94,7 +94,7 @@ export default function AssessmentHistoryPage() {
 
             </div>
 
-            <div className="rounded-2xl bg-white p-6 shadow">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}>
 
                 <div className="relative mb-6 max-w-md">
 
@@ -102,7 +102,7 @@ export default function AssessmentHistoryPage() {
 
                         size={18}
 
-                        className="absolute left-4 top-4 text-gray-400"
+                        className="absolute left-4 top-4 text-[var(--content-muted)]"
 
                     />
 

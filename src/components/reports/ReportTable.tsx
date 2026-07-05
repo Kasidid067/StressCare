@@ -9,7 +9,7 @@ export default function ReportTable({
 }: Props) {
 
     return (
-        <div className="rounded-2xl bg-white p-6 shadow">
+        <div className="theme-card rounded-2xl p-6">
             <table className="w-full">
                 <thead>
                     <tr className="border-b">

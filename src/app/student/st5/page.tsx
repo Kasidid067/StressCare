@@ -62,7 +62,7 @@ export default function ST5Page() {
 
                 <div
                     key={item.id}
-                    className="rounded-xl bg-white p-6 shadow"
+                    className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow" style={{ boxShadow: "var(--shadow)" }}
                 >
 
                     <h2 className="mb-5 text-lg font-semibold">
@@ -88,7 +88,7 @@ export default function ST5Page() {
                 ${answers[index] ===
                                         choice.score
                                         ? "border-green-600 bg-green-600 text-white"
-                                        : "border-gray-300"
+                                        : "border-[var(--border)]"
                                     }
                 `}
                             >
